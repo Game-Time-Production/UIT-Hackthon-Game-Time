@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf7c34a0dc4e6348bea04faa70406ee, type: 3}
+  m_Name: DinoCharacter_2
+  m_EditorClassIdentifier: 
+  m_Labels:
+  - m_Name: Idle
+    m_Hash: 2081823275
+    m_CategoryList:
+    - m_Name: idle1
+      m_Hash: -287494167
+      m_Sprite: {fileID: 6257046027232108077, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: idle2
+      m_Hash: 2010414675
+      m_Sprite: {fileID: -8286560987708172065, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: idle3
+      m_Hash: 13848261
+      m_Sprite: {fileID: -8286560987708172065, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+  - m_Name: Run
+    m_Hash: 1748754976
+    m_CategoryList:
+    - m_Name: run1
+      m_Hash: 417880995
+      m_Sprite: {fileID: -9090256856807665732, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: run2
+      m_Hash: -2115958247
+      m_Sprite: {fileID: -5875646046826985496, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: run3
+      m_Hash: -152683889
+      m_Sprite: {fileID: -4757027935454551482, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: run4
+      m_Hash: 1753394988
+      m_Sprite: {fileID: 747901297976196677, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: run5
+      m_Hash: 528850874
+      m_Sprite: {fileID: -8799713894660558535, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: run6
+      m_Hash: -2037592576
+      m_Sprite: {fileID: -3936616637813362086, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+  - m_Name: Kick
+    m_Hash: -1092128709
+    m_CategoryList:
+    - m_Name: kick1
+      m_Hash: -207040793
+      m_Sprite: {fileID: 9125498157706366390, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: kick2
+      m_Hash: 1788976989
+      m_Sprite: {fileID: 5812355154914232366, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: kick3
+      m_Hash: 497463243
+      m_Sprite: {fileID: 3558796315206722773, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+  - m_Name: Hurt
+    m_Hash: 1740614436
+    m_CategoryList:
+    - m_Name: hurt1
+      m_Hash: 2121898953
+      m_Sprite: {fileID: -2678000645872940547, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: hurt2
+      m_Hash: -412038541
+      m_Sprite: {fileID: -230669603557627360, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: hurt3
+      m_Hash: -1871185179
+      m_Sprite: {fileID: -2519562820075941236, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
+    - m_Name: hurt4
+      m_Hash: 236154694
+      m_Sprite: {fileID: -7045305757555629346, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
