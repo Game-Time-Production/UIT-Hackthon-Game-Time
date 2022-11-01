@@ -45,7 +45,7 @@ MonoBehaviour:
       m_Sprite: {fileID: -5573424770388495174, guid: 52333ead2ab681f49b95acd12525968e, type: 3}
     - m_Name: run6
       m_Hash: -2037592576
-      m_Sprite: {fileID: 6843668749568235812, guid: 47bcb9c777070e34f82fe3c4814d9e4a, type: 3}
+      m_Sprite: {fileID: -8254887669490900623, guid: 52333ead2ab681f49b95acd12525968e, type: 3}
   - m_Name: Kick
     m_Hash: -1092128709
     m_CategoryList:
