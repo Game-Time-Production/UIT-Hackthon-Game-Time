@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation; // WHY 
 using Photon.Pun;
-public class PUNPlayerController : MonoBehaviour, IPunObservable
+public class PUNPlayerController : MonoBehaviour
 {
 
     [SerializeField] private string playerID;
@@ -16,7 +16,6 @@ public class PUNPlayerController : MonoBehaviour, IPunObservable
     private Rigidbody2D rb;
     private Collider2D collider2D;
     public PhotonView view;
-    Vector3 networkPosition;
 
     public AnimationState animationState
     {
@@ -58,7 +57,7 @@ public class PUNPlayerController : MonoBehaviour, IPunObservable
     }
     private void FixedUpdate()
     {
-        if (!_animator.GetBool("IsHurting"))
+        if (!_animator.GetBool("IsHurting") && animationState != AnimationState.Kicking)
             Move();
     }
     public void ProcessInput()
@@ -71,9 +70,10 @@ public class PUNPlayerController : MonoBehaviour, IPunObservable
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            if (IsGrounded())
+                rb.velocity = Vector2.zero; // do this for better ground kick
             animationState = AnimationState.Kicking;
-            // _animator.SetTrigger("Kick");
-            // state.Animator.SetTrigger("Kick");
+
         }
     }
     public void Move()
@@ -92,7 +92,8 @@ public class PUNPlayerController : MonoBehaviour, IPunObservable
                 animationState = AnimationState.Idling;
             }
         }
-        transform.position += (Vector3)new Vector2(directionX * speed * Time.fixedDeltaTime, 0);
+        // transform.position += (Vector3)new Vector2(directionX * speed * Time.fixedDeltaTime, 0);
+        rb.velocity = new Vector2(directionX * speed, rb.velocity.y);
     }
     public virtual void OnAnimationStateChange()
     {
@@ -167,24 +168,6 @@ public class PUNPlayerController : MonoBehaviour, IPunObservable
     public void ResetAnimationStateToIdle()
     {
         animationState = AnimationState.Idling;
-    }
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-            stream.SendNext(rb.position);
-            stream.SendNext(rb.rotation);
-            stream.SendNext(rb.velocity);
-        }
-        else
-        {
-            rb.position = (Vector3)stream.ReceiveNext();
-            // rb.rotation = (Quaternion)stream.ReceiveNext();
-            rb.velocity = (Vector3)stream.ReceiveNext();
-
-            float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.timestamp));
-            rb.position += rb.velocity * lag;
-        }
     }
     [PunRPC]
     public void PushBack(Vector3 knockBackDirection)
