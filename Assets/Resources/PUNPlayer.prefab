@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4697250698856904154}
   - component: {fileID: -1234812443359553681}
   - component: {fileID: 6056339395662337062}
+  - component: {fileID: 6216794325856018932}
   m_Layer: 3
   m_Name: PUNPlayer
   m_TagString: Untagged
@@ -230,6 +231,7 @@ MonoBehaviour:
   - {fileID: 4697250698856904154}
   - {fileID: -1234812443359553681}
   - {fileID: 6056339395662337062}
+  - {fileID: 6216794325856018932}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -273,13 +275,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3280433305998029790}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e7cb724808c322458aa4d15f5035fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 1
+  m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
 --- !u!114 &6056339395662337062
@@ -295,12 +297,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionModel:
-    SynchronizeEnabled: 1
+    SynchronizeEnabled: 0
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 50
-    InterpolateOption: 4
+    InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 10
+    InterpolateLerpSpeed: 15
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1
@@ -315,6 +317,23 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &6216794325856018932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3280433305998029790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc140e655ff289459c28049ea89b8cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sendRate: 30
+  _serializationRate: 30
+  _smoothPos: 10
+  _smoothRot: 5
+  teleportIfDistance: 50
 --- !u!1 &5545720159811362097
 GameObject:
   m_ObjectHideFlags: 0
