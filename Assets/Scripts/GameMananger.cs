@@ -13,6 +13,9 @@ public class GameMananger : MonoBehaviourPunCallbacks
     public SpawnPlayer spawnManager;
     [SerializeField] GameObject chooseSkinButtonContainer;
     [SerializeField] TMP_InputField playerNameInputField;
+    [Header("Player Enter Notification")]
+    [SerializeField] GameObject playerEnterNotificationContainer;
+    [SerializeField] GameObject playerEnterTextPrefab;
     private void Awake()
     {
         if (instance == null)
@@ -37,5 +40,12 @@ public class GameMananger : MonoBehaviourPunCallbacks
         playerNameInputField?.transform.parent.gameObject.SetActive(false);
 
     }
+    public void ShowPlayerEnterNotification(string name)
+    {
+        GameObject notificationText = PhotonNetwork.Instantiate(playerEnterTextPrefab.name, Vector3.zero, Quaternion.identity);
+        notificationText.transform.parent = playerEnterNotificationContainer.transform;
+        notificationText.GetComponentInChildren<TextMeshProUGUI>().text = $"{name} has entered the game";
+    }
+
 
 }

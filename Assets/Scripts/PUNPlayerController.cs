@@ -24,6 +24,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     public int skinIndex;
     public ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
     public Player player;
+    Vector3 spawnPos;
     public AnimationState animationState
     {
         get { return _animationState; }
@@ -46,6 +47,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     private void Awake()
     {
         // local variable
+        spawnPos = transform.position;
         collider2D = GetComponent<Collider2D>();
         spriteLibrary = GetComponent<SpriteLibrary>();
         if (_animator == null)
@@ -68,6 +70,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         }
         else
             CameraController.instance.target = transform;
+        GameMananger.instance.ShowPlayerEnterNotification(view.Owner.NickName);
 
     }
     private void Update()
@@ -179,6 +182,14 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         );
         return raycastHit.collider != null;
     }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag=="Kill Zone")
+        {
+            rb.velocity = Vector2.zero;
+            transform.position = spawnPos;
+        }
+    }
     public void StopInvulnerable()
     {
         // Debug.Log("stop vulnerable func call");
@@ -221,4 +232,5 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
         nameTagText.text = view.Owner.NickName;
     }
+
 }
