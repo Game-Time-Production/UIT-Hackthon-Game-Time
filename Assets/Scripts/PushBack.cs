@@ -13,11 +13,6 @@ public class PushBack : MonoBehaviour
             PUNPlayerController player = other.gameObject.GetComponent<PUNPlayerController>();
             if (!player.view.IsMine)
             {
-                // player.Rb.velocity = (transform.position - transform.parent.position).normalized * _knockBackForce;
-                // var evnt = PlayerTakeDamage.Create(player.entity);
-                // evnt.Message = "id : " + player.entity.GetInstanceID() + " take damage";
-                // evnt.KnockBackDirection = (transform.position - transform.parent.position).normalized * _knockBackForce;
-                // evnt.Send();
                 Vector3 KnockBackDirection = (transform.position - transform.parent.position).normalized * _knockBackForce;
                 player.view.RPC("PushBack", Photon.Pun.RpcTarget.All, KnockBackDirection);
 

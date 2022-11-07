@@ -3,20 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation; // WHY 
 using Photon.Pun;
-public class PUNPlayerController : MonoBehaviour
+using Photon.Realtime;
+using System;
+using static CustomPropertiesConstant;
+using TMPro;
+public class PUNPlayerController : MonoBehaviourPunCallbacks
 {
-
     [SerializeField] private string playerID;
     public SpriteLibrary spriteLibrary;
     public LayerMask grounds;
     [SerializeField] private Animator _animator;
     [SerializeField] AnimationState _animationState;
+    [SerializeField] TextMeshPro nameTagText;
     public float speed = .2f;
     private float directionX;
     private Rigidbody2D rb;
     private Collider2D collider2D;
     public PhotonView view;
-
+    Action skillAction;
+    public int skinIndex;
+    public ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+    public Player player;
+    Vector3 spawnPos;
     public AnimationState animationState
     {
         get { return _animationState; }
@@ -36,9 +44,10 @@ public class PUNPlayerController : MonoBehaviour
         Kicking,
         Hurting
     }
-    private void Start()
+    private void Awake()
     {
         // local variable
+        spawnPos = transform.position;
         collider2D = GetComponent<Collider2D>();
         spriteLibrary = GetComponent<SpriteLibrary>();
         if (_animator == null)
@@ -46,12 +55,26 @@ public class PUNPlayerController : MonoBehaviour
         animationState = AnimationState.Idling;
         Rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
+        skillAction = () =>
+        {
+            if (IsGrounded())
+                rb.velocity = Vector2.zero; // do this for better ground kick
+            animationState = AnimationState.Kicking;
+        };
+    }
+    private void Start()
+    {
+        if (!view.IsMine)
+        {
+            view.RPC("SyncData", RpcTarget.All);
+        }
+        else
+            CameraController.instance.target = transform;
+        GameMananger.instance.ShowPlayerEnterNotification(view.Owner.NickName);
+
     }
     private void Update()
     {
-        // Debug.Log(entity.IsOwner);
-        // if (entity.IsOwner && !_animator.GetBool("IsHurting"))
-        // ProcessInput();
         if (view.IsMine && !_animator.GetBool("IsHurting"))
             ProcessInput();
     }
@@ -70,10 +93,10 @@ public class PUNPlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (IsGrounded())
-                rb.velocity = Vector2.zero; // do this for better ground kick
-            animationState = AnimationState.Kicking;
-
+            // if (IsGrounded())
+            //     rb.velocity = Vector2.zero; // do this for better ground kick
+            // animationState = AnimationState.Kicking;
+            skillAction?.Invoke();
         }
     }
     public void Move()
@@ -159,6 +182,14 @@ public class PUNPlayerController : MonoBehaviour
         );
         return raycastHit.collider != null;
     }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag=="Kill Zone")
+        {
+            rb.velocity = Vector2.zero;
+            transform.position = spawnPos;
+        }
+    }
     public void StopInvulnerable()
     {
         // Debug.Log("stop vulnerable func call");
@@ -174,6 +205,32 @@ public class PUNPlayerController : MonoBehaviour
     {
         animationState = AnimationState.Hurting;
         rb.velocity = knockBackDirection;
+    }
+    public void SetSkillAction(Action skill)
+    {
+        skillAction = skill;
+    }
+    [PunRPC]
+    public void SyncSkin()
+    {
+        GetComponent<SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
+    }
+    public void SetData(string name, int skinIndex)
+    {
+        // sync change maybe ...
+        playerProperties[SKIN_INDEX] = skinIndex;
+        playerProperties[PLAYER_NAME] = name;
+        // local change
+        nameTagText.text = name;
+        GetComponent<SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
+    }
+    [PunRPC]
+    public void SyncData()
+    {
+        GetComponent<SpriteLibrary>().spriteLibraryAsset =
+            GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
+        nameTagText.text = view.Owner.NickName;
     }
 
 }

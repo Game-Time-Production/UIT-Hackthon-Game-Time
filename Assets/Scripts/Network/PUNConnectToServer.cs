@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using Photon.Realtime;
 public class PUNConnectToServer : MonoBehaviourPunCallbacks
 {
     void Start()
@@ -19,5 +20,4 @@ public class PUNConnectToServer : MonoBehaviourPunCallbacks
         base.OnJoinedLobby();
         SceneManager.LoadScene("Lobby");
     }
-    
 }
