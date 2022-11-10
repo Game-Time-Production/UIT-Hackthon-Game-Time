@@ -43,6 +43,9 @@ MonoBehaviour:
   - SyncSkin
   - UpdateData
   - SyncData
+  - ThrowBomb
+  - Explode
+  - ToggleShield
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

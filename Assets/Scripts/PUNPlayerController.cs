@@ -9,21 +9,40 @@ using static CustomPropertiesConstant;
 using TMPro;
 public class PUNPlayerController : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private string playerID;
+    // ------------------------------------ ANIMATION VARIABLES ------------------------------------ // 
     public SpriteLibrary spriteLibrary;
-    public LayerMask grounds;
     [SerializeField] private Animator _animator;
     [SerializeField] AnimationState _animationState;
-    [SerializeField] TextMeshPro nameTagText;
+    // ------------------------------------ STATS VALUE ------------------------------------ // 
     public float speed = .2f;
-    private float directionX;
+    private float _directionX;
+    private bool _isShielded;
+    [SerializeField] private bool _pushCD;
+    [SerializeField] private bool _shieldCD;
+    [SerializeField] public float pushCoolDownTime;
+    [SerializeField] public float shieldCoolDownTime;
+
+    [SerializeField] public float _shieldDuration;
+    // ------------------------------------ PHYSIC VARIABLES ------------------------------------ // 
     private Rigidbody2D rb;
     private Collider2D collider2D;
+    public LayerMask grounds;
+
+    // ------------------------------------ NETWORK VARIABLES ------------------------------------ // 
     public PhotonView view;
-    Action skillAction;
-    public int skinIndex;
+    public int skinIndex; // obsolete
     public ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
     public Player player;
+    [SerializeField] TextMeshPro nameTagText;
+    // ------------------------------------ SKILL AND POWERUP ------------------------------------ // 
+    [SerializeField] PlayerPowerUpController playerPowerUpController;
+    [SerializeField] GameObject shieldObject;
+
+    // ------------------------------------ EVENT ------------------------------------ // 
+    Action skillAction;
+    public EventHandler OnPushSkillUse;
+    public EventHandler OnShieldSkillUse;
+
     Vector3 spawnPos;
     public AnimationState animationState
     {
@@ -55,12 +74,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         animationState = AnimationState.Idling;
         Rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
-        skillAction = () =>
-        {
-            if (IsGrounded())
-                rb.velocity = Vector2.zero; // do this for better ground kick
-            animationState = AnimationState.Kicking;
-        };
+        playerPowerUpController = GetComponent<PlayerPowerUpController>();
+        player = view.Owner;
     }
     private void Start()
     {
@@ -69,7 +84,11 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             view.RPC("SyncData", RpcTarget.All);
         }
         else
+        {
             CameraController.instance.target = transform;
+            GameMananger.instance.clientPlayerController = this;
+            GameMananger.instance.SetUpSkillUICooldown();
+        }
         GameMananger.instance.ShowPlayerEnterNotification(view.Owner.NickName);
 
     }
@@ -86,28 +105,35 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     public void ProcessInput()
     {
         // get horizontal direction
-        directionX = Input.GetAxisRaw("Horizontal");
+        _directionX = Input.GetAxisRaw("Horizontal");
         if (IsGrounded() && Input.GetButtonDown("Jump"))
         {
             Rb.velocity = Vector2.up * speed * 3;
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !_pushCD)
         {
             // if (IsGrounded())
             //     rb.velocity = Vector2.zero; // do this for better ground kick
             // animationState = AnimationState.Kicking;
-            skillAction?.Invoke();
+            // skillAction?.Invoke();
+            Push();
+
         }
+        if (Input.GetKeyDown(KeyCode.E) && !_shieldCD && !_isShielded)
+        {
+            StartCoroutine(ShieldSkill(_shieldDuration));
+        }
+
     }
     public void Move()
     {
         // flip character sprite
         if (animationState != AnimationState.Kicking)
         {
-            if (directionX != 0)
+            if (_directionX != 0)
             {
                 // transform.localScale = new Vector3(directionX > 0 ? 1 : -1, 1, 1);
-                transform.rotation = Quaternion.Euler(0f, directionX > 0 ? 0 : 180f, 0f);
+                transform.rotation = Quaternion.Euler(0f, _directionX > 0 ? 0 : 180f, 0f);
                 animationState = AnimationState.Running;
             }
             else if (animationState != AnimationState.Idling)
@@ -116,7 +142,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             }
         }
         // transform.position += (Vector3)new Vector2(directionX * speed * Time.fixedDeltaTime, 0);
-        rb.velocity = new Vector2(directionX * speed, rb.velocity.y);
+        rb.velocity = new Vector2(_directionX * speed, rb.velocity.y);
     }
     public virtual void OnAnimationStateChange()
     {
@@ -184,7 +210,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag=="Kill Zone")
+        if (other.gameObject.tag == "Kill Zone")
         {
             rb.velocity = Vector2.zero;
             transform.position = spawnPos;
@@ -203,8 +229,12 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void PushBack(Vector3 knockBackDirection)
     {
-        animationState = AnimationState.Hurting;
-        rb.velocity = knockBackDirection;
+        if (!_isShielded)
+        {
+            animationState = AnimationState.Hurting;
+            rb.velocity = knockBackDirection;
+        }
+        else Debug.Log("is shielded can't be attacked");
     }
     public void SetSkillAction(Action skill)
     {
@@ -232,5 +262,42 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
         nameTagText.text = view.Owner.NickName;
     }
+    [PunRPC]
+    public void ToggleShield(bool value)
+    {
+        shieldObject?.SetActive(value);
+        _isShielded = value;
+    }
+    public IEnumerator ShieldSkill(float duration)
+    {
+        OnShieldSkillUse?.Invoke(this, null);
+        view.RPC("ToggleShield", RpcTarget.All, true);
+        yield return new WaitForSeconds(duration);
+        view.RPC("ToggleShield", RpcTarget.All, false);
+        yield return SkillCoolDown(
+            shieldCoolDownTime,
+            () => { _shieldCD = true; },
+            () => { _shieldCD = false; }
+        );
 
+
+    }
+    public IEnumerator SkillCoolDown(float cooldownDuration, Action preCoolDownAction = null, Action postCooldownAction = null)
+    {
+        preCoolDownAction?.Invoke();
+        yield return new WaitForSeconds(cooldownDuration);
+        postCooldownAction?.Invoke();
+    }
+    public void Push()
+    {
+        OnPushSkillUse?.Invoke(this, null);
+        if (IsGrounded())
+            rb.velocity = Vector2.zero; // do this for better ground kick
+        animationState = AnimationState.Kicking;
+        StartCoroutine(SkillCoolDown(
+              pushCoolDownTime,
+              () => { _pushCD = true; },
+              () => { _pushCD = false; }
+          ));
+    }
 }

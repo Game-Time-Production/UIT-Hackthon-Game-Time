@@ -5,6 +5,7 @@ using Photon.Pun;
 using UnityEngine.Experimental.U2D.Animation; // WHY 
 using Photon.Realtime;
 
+[System.Obsolete("This Skin Syncrhonization Script is deprecated\n Note to self: remove this later",true)]
 public class SkinSynchronization : MonoBehaviourPunCallbacks
 {
     int skinIndex;

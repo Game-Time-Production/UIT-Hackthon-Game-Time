@@ -8,6 +8,7 @@ using TMPro;
 using static CustomPropertiesConstant;
 public class GameMananger : MonoBehaviourPunCallbacks
 {
+    public PUNPlayerController clientPlayerController;
     public List<SpriteLibraryAsset> CharacterSpriteLibraryAssets;
     public static GameMananger instance;
     public SpawnPlayer spawnManager;
@@ -16,6 +17,8 @@ public class GameMananger : MonoBehaviourPunCallbacks
     [Header("Player Enter Notification")]
     [SerializeField] GameObject playerEnterNotificationContainer;
     [SerializeField] GameObject playerEnterTextPrefab;
+    [Header("Fancy UI Stuffs")]
+    [SerializeField] List<SkillCoolDownUIController> skillCoolDownUIControllers;
     private void Awake()
     {
         if (instance == null)
@@ -36,8 +39,13 @@ public class GameMananger : MonoBehaviourPunCallbacks
             PUNplayer.player.NickName = playerNameInputField.text;
         }
         // player.GetComponent<PhotonView>().RPC("SyncSkin", RpcTarget.All);
+
         chooseSkinButtonContainer?.SetActive(false);
         playerNameInputField?.transform.parent.gameObject.SetActive(false);
+        foreach (var item in skillCoolDownUIControllers)
+        {
+            item.gameObject.SetActive(true);
+        }
 
     }
     public void ShowPlayerEnterNotification(string name)
@@ -46,6 +54,24 @@ public class GameMananger : MonoBehaviourPunCallbacks
         notificationText.transform.parent = playerEnterNotificationContainer.transform;
         notificationText.GetComponentInChildren<TextMeshProUGUI>().text = $"{name} has entered the game";
     }
+    public void SetUpSkillUICooldown()
+    {
+        foreach (var item in skillCoolDownUIControllers)
+        {
+            switch (item.skillType)
+            {
+                case SkillType.PUSH:
+                    item.SetUp(clientPlayerController.pushCoolDownTime);
+                    clientPlayerController.OnPushSkillUse = item.OnSkillUse;
+                    break;
+                case SkillType.SHIELD:
+                    item.SetUp(clientPlayerController.shieldCoolDownTime + clientPlayerController._shieldDuration);
+                    clientPlayerController.OnShieldSkillUse = item.OnSkillUse;
+                    break;
+                default:
+                    break;
 
-
+            }
+        }
+    }
 }
