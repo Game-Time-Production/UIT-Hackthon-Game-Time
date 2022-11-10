@@ -9,7 +9,7 @@ public class PlayerEnterTextBehavior : MonoBehaviour
     [SerializeField] Image backgroundImage;
     private void Start()
     {
-        GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        GetComponent<RectTransform>().anchoredPosition = Vector2.left;
         StartCoroutine(FadeCoroutine(4f));
     }
     public IEnumerator FadeCoroutine(float duration)
