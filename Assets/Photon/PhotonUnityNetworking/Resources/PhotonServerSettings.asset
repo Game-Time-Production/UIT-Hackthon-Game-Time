@@ -46,6 +46,7 @@ MonoBehaviour:
   - ThrowBomb
   - Explode
   - ToggleShield
+  - Awake
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

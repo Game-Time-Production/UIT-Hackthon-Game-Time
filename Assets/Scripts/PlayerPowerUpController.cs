@@ -8,7 +8,12 @@ public class PlayerPowerUpController : MonoBehaviour
     [SerializeField] Transform projectileStartPos;
     [Header("Prefabs")]
     [SerializeField] GameObject bombPrefab;
+    PhotonView view;
     [PunRPC]
+    private void Awake()
+    {
+        view = GetComponent<PhotonView>();
+    }
     public void ThrowBomb(Vector3 direction) // note change the way the bomb get its direction
     {
         Vector2 trueDirection = (projectileStartPos.position - transform.position).normalized;
@@ -18,9 +23,12 @@ public class PlayerPowerUpController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (view.IsMine)
         {
-            ThrowBomb(transform.forward.normalized * 5f);
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                ThrowBomb(transform.forward.normalized * 5f);
+            }
         }
     }
 }
