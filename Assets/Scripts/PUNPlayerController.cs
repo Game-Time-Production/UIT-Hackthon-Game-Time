@@ -15,6 +15,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     [SerializeField] AnimationState _animationState;
     // ------------------------------------ STATS VALUE ------------------------------------ // 
     public float speed = .2f;
+    public float jumpSpeed = .2f;
+    private float baseSpeed;
     private float _directionX;
     private bool _isShielded;
     [SerializeField] private bool _pushCD;
@@ -76,6 +78,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         view = GetComponent<PhotonView>();
         playerPowerUpController = GetComponent<PlayerPowerUpController>();
         player = view.Owner;
+        baseSpeed = speed;
     }
     private void Start()
     {
@@ -108,7 +111,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         _directionX = Input.GetAxisRaw("Horizontal");
         if (IsGrounded() && Input.GetButtonDown("Jump"))
         {
-            Rb.velocity = Vector2.up * speed * 3;
+            Rb.velocity = Vector2.up * jumpSpeed * 3;
         }
         if (Input.GetKeyDown(KeyCode.Q) && !_pushCD)
         {
@@ -299,5 +302,29 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
               () => { _pushCD = true; },
               () => { _pushCD = false; }
           ));
+    }
+    [PunRPC]
+    public void SlowDown(float duration, float slowPercent)
+    {
+        StartCoroutine(GetSlow(duration, slowPercent));
+    }
+    IEnumerator GetSlow(float duration, float slowPercent)
+    {
+        speed -= baseSpeed * Mathf.Clamp(slowPercent, 0f, 1f);
+        speed = Mathf.Clamp(speed, 0.1f, speed); //0.1f min speed
+        yield return new WaitForSeconds(duration);
+        speed = baseSpeed;
+    }
+    [PunRPC]
+    public void SpeedBoost(float duration, float speedBoostPercent)
+    {
+        StartCoroutine(IncreaseSpeed(duration, speedBoostPercent));
+    }
+    IEnumerator IncreaseSpeed(float duration, float speedBoostPercent)
+    {
+        speed += baseSpeed * speedBoostPercent;
+        yield return new WaitForSeconds(duration);
+        speed = baseSpeed;
+
     }
 }

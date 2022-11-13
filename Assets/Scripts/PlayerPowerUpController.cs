@@ -5,21 +5,27 @@ using Photon.Pun;
 using Photon.Realtime;
 public class PlayerPowerUpController : MonoBehaviour
 {
-    [SerializeField] Transform projectileStartPos;
+    [SerializeField] Transform _projectileStartPos;
+    public Transform ProjectilStartPos
+    {
+        get { return _projectileStartPos; }
+    }
     [Header("Prefabs")]
     [SerializeField] GameObject bombPrefab;
     PhotonView view;
+    public IPowerUp[] powerUp = new IPowerUp[2] { null, null };
     [PunRPC]
     private void Awake()
     {
         view = GetComponent<PhotonView>();
+        // powerUp[0] = new BombPowerUp(_projectileStartPos, transform);
     }
-    public void ThrowBomb(Vector3 direction) // note change the way the bomb get its direction
+    private void Start()
     {
-        Vector2 trueDirection = (projectileStartPos.position - transform.position).normalized;
-        // Debug.Log(trueDirection);
-        GameObject bomb = PhotonNetwork.Instantiate(bombPrefab.name, projectileStartPos.position, Quaternion.identity);
-        bomb.GetComponent<Rigidbody2D>().AddForce(trueDirection * 10f, ForceMode2D.Impulse);
+        if (view.IsMine)
+        {
+            PowerUpManager.instance.SetUpPowerUp(this);
+        }
     }
     private void Update()
     {
@@ -27,8 +33,27 @@ public class PlayerPowerUpController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                ThrowBomb(transform.forward.normalized * 5f);
+                Debug.Log("power up slot 1 pressed");
+                powerUp[0]?.PerformAction();
+                powerUp[0] = null;
+                PowerUpSlotUI.instance.RemoveSlotIcon(0);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                Debug.Log("power up slot 2 pressed");
+                powerUp[1]?.PerformAction();
+                powerUp[1] = null;
+                PowerUpSlotUI.instance.RemoveSlotIcon(1);
             }
         }
+    }
+    public int GetEmptyPowerUpSlot()
+    {
+        for (int i = 0; i < powerUp.Length; i++)
+        {
+            if (powerUp[i] == null)
+                return i;
+        }
+        return -1;
     }
 }

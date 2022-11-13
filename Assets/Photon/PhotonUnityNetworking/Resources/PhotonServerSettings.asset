@@ -47,6 +47,15 @@ MonoBehaviour:
   - Explode
   - ToggleShield
   - Awake
+  - StartCoolDown
+  - SlowDown
+  - SlowProjectileExplode
+  - SpeedBoost
+  - SetPowerUpSprite
+  - RandomizePowerUp
+  - SyncPowerUpType
+  - DisablePowerUp
+  - SetUpPowerUp
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
