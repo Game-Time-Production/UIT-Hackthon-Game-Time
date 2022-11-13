@@ -302,7 +302,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 6843668749568235812, guid: 47bcb9c777070e34f82fe3c4814d9e4a, type: 3}
+  m_Sprite: {fileID: 5167926156991472794, guid: 47bcb9c777070e34f82fe3c4814d9e4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -329,6 +329,7 @@ MonoBehaviour:
   _animator: {fileID: 2971861653939671292}
   _animationState: 0
   speed: 5
+  jumpSpeed: 5
   _pushCD: 0
   _shieldCD: 0
   pushCoolDownTime: 1
@@ -380,7 +381,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.1333333}
+    oldSize: {x: 1, y: 1.0666667}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -434,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 3.5490152e+24
-  m_labelHash: -5.2964837e-35
+  m_labelHash: 4.937112e+24
 --- !u!114 &1813339679965643277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441454a3fbcb4c24d983f709cae80cc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileStartPos: {fileID: 3585472133062205434}
+  _projectileStartPos: {fileID: 3585472133062205434}
   bombPrefab: {fileID: 7709181896193182043, guid: 2c1e88c3f3e7db547b8a361003d8ef6b, type: 3}
 --- !u!1 &5545720159811362097
 GameObject:
@@ -800,6 +801,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3280433305998029788}
     m_Modifications:
+    - target: {fileID: 2853850657104319733, guid: 28ae6ff711ea48e4dac82471825a94a9, type: 3}
+      propertyPath: m_Radius
+      value: 1.1185939
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853850657104319733, guid: 28ae6ff711ea48e4dac82471825a94a9, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.11859393
+      objectReference: {fileID: 0}
     - target: {fileID: 7258577793705519552, guid: 28ae6ff711ea48e4dac82471825a94a9, type: 3}
       propertyPath: m_RootOrder
       value: 0
