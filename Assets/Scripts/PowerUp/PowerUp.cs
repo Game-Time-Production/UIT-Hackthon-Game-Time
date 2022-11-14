@@ -6,10 +6,12 @@ using Photon.Pun;
 public interface IPowerUp
 {
     public void PerformAction();
+    public void SetPlayerRefernce(PUNPlayerController playerController);
 }
 public interface IProjectilePowerUp : IPowerUp
 {
     public void SetUpStartPosition(Transform startPos, Transform basePos);
+
 }
 public interface IStatPowerUp : IPowerUp
 {
@@ -99,7 +101,7 @@ public class PowerUp : MonoBehaviour
     [PunRPC]
     public void RandomizePowerUp()
     {
-        powerUpType = (PowerUpType)UnityEngine.Random.Range(0, 3);
+        powerUpType = (PowerUpType)UnityEngine.Random.Range(0, 4);
     }
     [PunRPC]
     public void SyncPowerUpType(int type)

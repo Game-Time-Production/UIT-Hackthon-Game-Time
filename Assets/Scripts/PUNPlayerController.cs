@@ -19,14 +19,15 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     private float baseSpeed;
     private float _directionX;
     private bool _isShielded;
+    public bool dashing = false;
     [SerializeField] private bool _pushCD;
     [SerializeField] private bool _shieldCD;
     [SerializeField] public float pushCoolDownTime;
     [SerializeField] public float shieldCoolDownTime;
-
     [SerializeField] public float _shieldDuration;
     // ------------------------------------ PHYSIC VARIABLES ------------------------------------ // 
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
+    public Rigidbody2D rb { get { return _rb; } }
     private Collider2D collider2D;
     public LayerMask grounds;
 
@@ -36,9 +37,12 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     public ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
     public Player player;
     [SerializeField] TextMeshPro nameTagText;
-    // ------------------------------------ SKILL AND POWERUP ------------------------------------ // 
+    // ------------------------------------ SKILL AND POWERUP, Effects ------------------------------------ // 
     [SerializeField] PlayerPowerUpController playerPowerUpController;
     [SerializeField] GameObject shieldObject;
+    [SerializeField] ParticleSystem speedBoostEffect;
+    [SerializeField] GhostEffect _ghostEffect;
+    public GhostEffect ghostEffect { get { return _ghostEffect; } }
 
     // ------------------------------------ EVENT ------------------------------------ // 
     Action skillAction;
@@ -56,8 +60,6 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-    public Rigidbody2D Rb { get => rb; set => rb = value; }
-
     public enum AnimationState
     {
         Idling,
@@ -74,9 +76,10 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         if (_animator == null)
             _animator = GetComponent<Animator>();
         animationState = AnimationState.Idling;
-        Rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
         playerPowerUpController = GetComponent<PlayerPowerUpController>();
+        _ghostEffect = GetComponent<GhostEffect>();
         player = view.Owner;
         baseSpeed = speed;
     }
@@ -111,7 +114,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         _directionX = Input.GetAxisRaw("Horizontal");
         if (IsGrounded() && Input.GetButtonDown("Jump"))
         {
-            Rb.velocity = Vector2.up * jumpSpeed * 3;
+            _rb.velocity = Vector2.up * jumpSpeed * 3;
         }
         if (Input.GetKeyDown(KeyCode.Q) && !_pushCD)
         {
@@ -130,6 +133,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     public void Move()
     {
+        if (dashing)
+            return;
         // flip character sprite
         if (animationState != AnimationState.Kicking)
         {
@@ -322,9 +327,16 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     IEnumerator IncreaseSpeed(float duration, float speedBoostPercent)
     {
+        speedBoostEffect.gameObject.SetActive(true);
         speed += baseSpeed * speedBoostPercent;
         yield return new WaitForSeconds(duration);
         speed = baseSpeed;
+        speedBoostEffect.gameObject.SetActive(false);
 
+    }
+    [PunRPC]
+    public void ToggleDashGhostEffect(bool value)
+    {
+        _ghostEffect.enabled = value;
     }
 }

@@ -8,7 +8,7 @@ public class ProjectilePowerUp : MonoBehaviour, IProjectilePowerUp
     [SerializeField] protected float throwForce = 10f;
     [SerializeField] protected Transform _startPosition;
     [SerializeField] protected Transform _basePosition;
-    public void SetUpStartPosition(Transform startPos, Transform basePos)
+    public void SetUpStartPosition(Transform startPos, Transform basePos) // change this to SetPlayerReference
     {
         _startPosition = startPos;
         _basePosition = basePos;
@@ -16,5 +16,10 @@ public class ProjectilePowerUp : MonoBehaviour, IProjectilePowerUp
     public virtual void PerformAction()
     {
 
+    }
+
+    public void SetPlayerRefernce(PUNPlayerController playerController)
+    {
+        throw new System.NotImplementedException();
     }
 }
