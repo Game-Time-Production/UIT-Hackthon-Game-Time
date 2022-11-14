@@ -26,6 +26,8 @@ public class PowerUpManager : MonoBehaviour
                 return GetComponent<SlowBallPowerUp>();
             case PowerUpType.SPEEDBOOST:
                 return GetComponent<SpeedBoostPowerUp>();
+            case PowerUpType.DASH:
+                return GetComponent<DashPowerUp>();
             default:
                 return null;
         }
@@ -43,5 +45,6 @@ public class PowerUpManager : MonoBehaviour
     {
         SetUpProjectilePowerUp(powerUpController.ProjectilStartPos, powerUpController.transform);
         GetComponent<SpeedBoostPowerUp>().SetPlayerRefernce(powerUpController.GetComponent<PUNPlayerController>());
+        GetComponent<DashPowerUp>().SetPlayerRefernce(powerUpController.GetComponent<PUNPlayerController>());
     }
 }
