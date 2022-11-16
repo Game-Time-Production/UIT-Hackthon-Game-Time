@@ -5350,6 +5350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sendRate: 60
   _serializationRate: 60
+  _setRate: 1
   _smoothPos: 10
   _smoothRot: 5
   teleportIfDistance: 50
