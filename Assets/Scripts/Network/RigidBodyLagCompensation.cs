@@ -10,6 +10,7 @@ public class RigidBodyLagCompensation : MonoBehaviour, IPunObservable
     PhotonView view;
     [SerializeField] int _sendRate = 30;
     [SerializeField] int _serializationRate = 10;
+    [SerializeField] bool _setRate = false;
     [Header("Lerp Value")]
     [SerializeField] float _smoothPos = 5.0f;
     [SerializeField] float _smoothRot = 5.0f;
@@ -17,8 +18,11 @@ public class RigidBodyLagCompensation : MonoBehaviour, IPunObservable
     [SerializeField] float teleportIfDistance = 50f;
     private void Awake()
     {
-        PhotonNetwork.SendRate = _sendRate;
-        PhotonNetwork.SerializationRate = _serializationRate;
+        if (_setRate)
+        {
+            PhotonNetwork.SendRate = _sendRate;
+            PhotonNetwork.SerializationRate = _serializationRate;
+        }
         _rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
     }
