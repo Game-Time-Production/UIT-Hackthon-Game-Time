@@ -44,4 +44,5 @@ public class SkillCoolDownUIController : MonoBehaviour
     {
         StartCoroutine(CoolDownUIEffect());
     }
+  
 }

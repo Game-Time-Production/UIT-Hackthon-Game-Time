@@ -12,24 +12,25 @@ public class PlayerPowerUpController : MonoBehaviour
     }
     [Header("Prefabs")]
     [SerializeField] GameObject bombPrefab;
-    PhotonView view;
+    PhotonView _view;
+    public PhotonView view { get { return _view; } }
     public IPowerUp[] powerUp = new IPowerUp[2] { null, null };
     [PunRPC]
     private void Awake()
     {
-        view = GetComponent<PhotonView>();
+        _view = GetComponent<PhotonView>();
         // powerUp[0] = new BombPowerUp(_projectileStartPos, transform);
     }
     private void Start()
     {
-        if (view.IsMine)
+        if (_view.IsMine)
         {
             PowerUpManager.instance.SetUpPowerUp(this);
         }
     }
     private void Update()
     {
-        if (view.IsMine)
+        if (_view.IsMine)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {

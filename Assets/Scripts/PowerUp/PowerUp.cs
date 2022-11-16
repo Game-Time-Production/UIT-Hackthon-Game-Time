@@ -13,10 +13,6 @@ public interface IProjectilePowerUp : IPowerUp
     public void SetUpStartPosition(Transform startPos, Transform basePos);
 
 }
-public interface IStatPowerUp : IPowerUp
-{
-    public void SetPlayerRefernce(PUNPlayerController playerController);
-}
 public enum PowerUpType
 {
     BOMB,
@@ -51,7 +47,8 @@ public class PowerUp : MonoBehaviour
             if (powerUpSlotIndex != -1)
             {
                 playerPowerUpController.powerUp[powerUpSlotIndex] = PowerUpManager.instance.GetPowerUp(powerUpType);
-                PowerUpSlotUI.instance.SetSlotIcon(powerUpSlotIndex, powerUpSprites[(int)powerUpType]);
+                if (playerPowerUpController.view.IsMine)
+                    PowerUpSlotUI.instance.SetSlotIcon(powerUpSlotIndex, powerUpSprites[(int)powerUpType]);
                 view.RPC("StartCoolDown", RpcTarget.MasterClient);
             }
             // playerPowerUpController.powerUp[0] = PowerUpManager.instance.GetPowerUp(powerUpType);
