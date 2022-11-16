@@ -20,6 +20,6 @@ public class ProjectilePowerUp : MonoBehaviour, IProjectilePowerUp
 
     public void SetPlayerRefernce(PUNPlayerController playerController)
     {
-        throw new System.NotImplementedException();
+        SetUpStartPosition(playerController.GetComponent<PlayerPowerUpController>().ProjectilStartPos, playerController.transform);
     }
 }

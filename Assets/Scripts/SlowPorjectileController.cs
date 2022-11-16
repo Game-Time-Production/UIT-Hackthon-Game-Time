@@ -24,14 +24,15 @@ public class SlowPorjectileController : MonoBehaviour
         if (view.IsMine)
         {
             PUNPlayerController playerController = other.gameObject.GetComponent<PUNPlayerController>();
-            if (playerController && !playerController.view.IsMine)
+            if (playerController)
             {
+                if (playerController.view.IsMine)
+                    return;
                 playerController.view.RPC("SlowDown", RpcTarget.All, slowDuration, slowPercent);
-                view.RPC("SlowProjectileExplode", RpcTarget.All);
+                // view.RPC("SlowProjectileExplode", RpcTarget.All);
             }
-            else return;
+            view.RPC("SlowProjectileExplode", RpcTarget.All);
         }
-        view.RPC("SlowProjectileExplode", RpcTarget.All);
 
 
     }

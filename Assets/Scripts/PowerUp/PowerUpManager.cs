@@ -43,8 +43,9 @@ public class PowerUpManager : MonoBehaviour
     }
     public void SetUpPowerUp(PlayerPowerUpController powerUpController)
     {
-        SetUpProjectilePowerUp(powerUpController.ProjectilStartPos, powerUpController.transform);
-        GetComponent<SpeedBoostPowerUp>().SetPlayerRefernce(powerUpController.GetComponent<PUNPlayerController>());
-        GetComponent<DashPowerUp>().SetPlayerRefernce(powerUpController.GetComponent<PUNPlayerController>());
+        foreach (var powerUp in GetComponents<IPowerUp>())
+        {
+            powerUp.SetPlayerRefernce(GameMananger.instance.clientPlayerController);
+        }
     }
 }

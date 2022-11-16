@@ -223,6 +223,10 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             rb.velocity = Vector2.zero;
             transform.position = spawnPos;
         }
+        if (other.gameObject.tag == "Win Zone")
+        {
+            view.RPC("WinGame", RpcTarget.All, view.Owner.NickName);
+        }
     }
     public void StopInvulnerable()
     {
@@ -338,5 +342,10 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     public void ToggleDashGhostEffect(bool value)
     {
         _ghostEffect.enabled = value;
+    }
+    [PunRPC]
+    public void WinGame(string playerName)
+    {
+        GameMananger.instance.EndGame(playerName);
     }
 }

@@ -19,6 +19,7 @@ public class GameMananger : MonoBehaviourPunCallbacks
     [SerializeField] GameObject playerEnterTextPrefab;
     [Header("Fancy UI Stuffs")]
     [SerializeField] List<SkillCoolDownUIController> skillCoolDownUIControllers;
+    [SerializeField] GameEndUI _endGameScreen;
     private void Awake()
     {
         if (instance == null)
@@ -73,5 +74,11 @@ public class GameMananger : MonoBehaviourPunCallbacks
 
             }
         }
+    }
+    public void EndGame(string playerName)
+    {
+        _endGameScreen.gameObject.SetActive(true);
+        _endGameScreen.playerWinText.text = $"PLAYER {playerName} WIN!";
+        clientPlayerController.enabled = false;
     }
 }
