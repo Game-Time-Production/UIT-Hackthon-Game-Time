@@ -20,7 +20,7 @@ public class DashPowerUp : MonoBehaviour, IPowerUp
     {
         float elapsedTime = 0f;
         playerController.view.RPC("ToggleDashGhostEffect", RpcTarget.All, true);
-        playerController.dashing = true;
+        playerController.forcedMovement = true;
         float oldGravityScale = playerController.rb.gravityScale;
         playerController.rb.gravityScale = 0f;
         while (elapsedTime < dashDuration)
@@ -31,7 +31,7 @@ public class DashPowerUp : MonoBehaviour, IPowerUp
         }
         playerController.rb.velocity = Vector2.zero;
         playerController.rb.gravityScale = oldGravityScale;
-        playerController.dashing = false;
+        playerController.forcedMovement = false;
         playerController.view.RPC("ToggleDashGhostEffect", RpcTarget.All, false);
 
 

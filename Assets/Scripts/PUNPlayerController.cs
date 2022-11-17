@@ -19,7 +19,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     private float baseSpeed;
     private float _directionX;
     private bool _isShielded;
-    public bool dashing = false;
+    public bool forcedMovement = false;
     [SerializeField] private bool _pushCD;
     [SerializeField] private bool _shieldCD;
     [SerializeField] public float pushCoolDownTime;
@@ -133,7 +133,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     public void Move()
     {
-        if (dashing)
+        if (forcedMovement)
             return;
         // flip character sprite
         if (animationState != AnimationState.Kicking)
