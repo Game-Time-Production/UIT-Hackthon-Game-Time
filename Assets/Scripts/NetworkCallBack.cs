@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.U2D.Animation;
 
+[System.Obsolete("Don't use this anymore")]
 public class NetworkCallBack : MonoBehaviour 
 {
     // public GameObject squarePrefab;

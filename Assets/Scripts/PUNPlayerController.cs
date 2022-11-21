@@ -16,10 +16,14 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     // ------------------------------------ STATS VALUE ------------------------------------ // 
     public float speed = .2f;
     public float jumpSpeed = .2f;
-    private float baseSpeed;
+    private float _baseSpeed;
+    public float baseSpeed { get { return _baseSpeed; } }
     private float _directionX;
     private bool _isShielded;
-    public bool dashing = false;
+    private float _baseGravityScale;
+    public float baseGravityScale { get { return _baseGravityScale; } }
+    public bool forcedMovement = false;
+    public bool lockMovement = false;
     [SerializeField] private bool _pushCD;
     [SerializeField] private bool _shieldCD;
     [SerializeField] public float pushCoolDownTime;
@@ -81,7 +85,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         playerPowerUpController = GetComponent<PlayerPowerUpController>();
         _ghostEffect = GetComponent<GhostEffect>();
         player = view.Owner;
-        baseSpeed = speed;
+        _baseSpeed = speed;
+        _baseGravityScale = rb.gravityScale;
     }
     private void Start()
     {
@@ -106,13 +111,13 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     private void FixedUpdate()
     {
         if (!_animator.GetBool("IsHurting") && animationState != AnimationState.Kicking)
-            Move();
+            MoveHorizontal();
     }
     public void ProcessInput()
     {
         // get horizontal direction
         _directionX = Input.GetAxisRaw("Horizontal");
-        if (IsGrounded() && Input.GetButtonDown("Jump"))
+        if (IsGrounded() && Input.GetButtonDown("Jump") && !lockMovement)
         {
             _rb.velocity = Vector2.up * jumpSpeed * 3;
         }
@@ -131,9 +136,9 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         }
 
     }
-    public void Move()
+    public void MoveHorizontal()
     {
-        if (dashing)
+        if (forcedMovement || lockMovement)
             return;
         // flip character sprite
         if (animationState != AnimationState.Kicking)
@@ -228,6 +233,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             view.RPC("WinGame", RpcTarget.All, view.Owner.NickName);
         }
     }
+    //TODO
     public void StopInvulnerable()
     {
         // Debug.Log("stop vulnerable func call");
@@ -319,10 +325,10 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     IEnumerator GetSlow(float duration, float slowPercent)
     {
-        speed -= baseSpeed * Mathf.Clamp(slowPercent, 0f, 1f);
+        speed -= _baseSpeed * Mathf.Clamp(slowPercent, 0f, 1f);
         speed = Mathf.Clamp(speed, 0.1f, speed); //0.1f min speed
         yield return new WaitForSeconds(duration);
-        speed = baseSpeed;
+        speed = _baseSpeed;
     }
     [PunRPC]
     public void SpeedBoost(float duration, float speedBoostPercent)
@@ -332,9 +338,9 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     IEnumerator IncreaseSpeed(float duration, float speedBoostPercent)
     {
         speedBoostEffect.gameObject.SetActive(true);
-        speed += baseSpeed * speedBoostPercent;
+        speed += _baseSpeed * speedBoostPercent;
         yield return new WaitForSeconds(duration);
-        speed = baseSpeed;
+        speed = _baseSpeed;
         speedBoostEffect.gameObject.SetActive(false);
 
     }

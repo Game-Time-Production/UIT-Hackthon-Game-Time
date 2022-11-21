@@ -5042,7 +5042,7 @@ GameObject:
   - component: {fileID: 1813339680132035391}
   m_Layer: 3
   m_Name: PUNPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5136,7 +5136,7 @@ MonoBehaviour:
   _animationState: 0
   speed: 5
   jumpSpeed: 5
-  dashing: 0
+  forcedMovement: 0
   _pushCD: 0
   _shieldCD: 0
   pushCoolDownTime: 1
