@@ -5136,7 +5136,7 @@ MonoBehaviour:
   _animationState: 0
   speed: 5
   jumpSpeed: 5
-  dashing: 0
+  forcedMovement: 0
   _pushCD: 0
   _shieldCD: 0
   pushCoolDownTime: 1

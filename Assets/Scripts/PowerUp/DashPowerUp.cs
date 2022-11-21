@@ -9,7 +9,8 @@ public class DashPowerUp : MonoBehaviour, IPowerUp
     [SerializeField] float dashVelocity = 50f;
     public void PerformAction()
     {
-        StartCoroutine(Dash());
+        if (!playerController.lockMovement)
+            StartCoroutine(Dash());
     }
 
     public void SetPlayerRefernce(PUNPlayerController playerController)
@@ -21,7 +22,6 @@ public class DashPowerUp : MonoBehaviour, IPowerUp
         float elapsedTime = 0f;
         playerController.view.RPC("ToggleDashGhostEffect", RpcTarget.All, true);
         playerController.forcedMovement = true;
-        float oldGravityScale = playerController.rb.gravityScale;
         playerController.rb.gravityScale = 0f;
         while (elapsedTime < dashDuration)
         {
@@ -30,7 +30,7 @@ public class DashPowerUp : MonoBehaviour, IPowerUp
             yield return new WaitForEndOfFrame();
         }
         playerController.rb.velocity = Vector2.zero;
-        playerController.rb.gravityScale = oldGravityScale;
+        playerController.rb.gravityScale = playerController.baseGravityScale;
         playerController.forcedMovement = false;
         playerController.view.RPC("ToggleDashGhostEffect", RpcTarget.All, false);
 

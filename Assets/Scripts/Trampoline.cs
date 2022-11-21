@@ -22,24 +22,32 @@ public class Trampoline : MonoBehaviour
             StartCoroutine(Push(playerController));
         }
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            PUNPlayerController playerController = other.gameObject.GetComponent<PUNPlayerController>();
+            playerController.transform.position = _startPosition.position;
+            StartCoroutine(Push(playerController));
+        }
+    }
     IEnumerator Push(PUNPlayerController playerController)
     {
 
         float elapsedTime = 0f;
         Action PostCoroutineAction = null;
-        float oldGravityScale = playerController.rb.gravityScale;
         if (transform.rotation != Quaternion.Euler(0, 0, 0))
         {
             playerController.rb.gravityScale = 0f;
             playerController.forcedMovement = true;
             PostCoroutineAction = () =>
             {
-                playerController.rb.gravityScale = oldGravityScale;
+                playerController.rb.gravityScale = playerController.baseGravityScale;
                 playerController.forcedMovement = false;
             };
         }
 
-        playerController.transform.position = _startPosition.position;
+        // playerController.transform.position = _startPosition.position;
         while (elapsedTime < _trampoLinePushTime)
         {
             playerController.rb.velocity = (_directionPosition.position - _startPosition.position) * _trampolinePushVelocity;
