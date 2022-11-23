@@ -5134,9 +5134,10 @@ MonoBehaviour:
   spriteLibrary: {fileID: 0}
   _animator: {fileID: 2971861653939671292}
   _animationState: 0
-  speed: 5
-  jumpSpeed: 5
+  speed: 7.5
+  jumpSpeed: 5.75
   forcedMovement: 0
+  lockMovement: 0
   _pushCD: 0
   _shieldCD: 0
   pushCoolDownTime: 1
@@ -5190,7 +5191,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.0666667}
+    oldSize: {x: 0.9375, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

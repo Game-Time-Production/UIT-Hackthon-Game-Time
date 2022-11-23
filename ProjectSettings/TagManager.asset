@@ -43,3 +43,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Camera View Block
+    uniqueID: 354359263
+    locked: 0
