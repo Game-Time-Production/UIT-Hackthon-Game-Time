@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using static CustomPropertiesConstant;
+
 public class GameMananger : MonoBehaviourPunCallbacks
 {
     public PUNPlayerController clientPlayerController;
@@ -18,7 +19,7 @@ public class GameMananger : MonoBehaviourPunCallbacks
     [SerializeField] GameObject playerEnterNotificationContainer;
     [SerializeField] GameObject playerEnterTextPrefab;
     [Header("Fancy UI Stuffs")]
-    [SerializeField] List<SkillCoolDownUIController> skillCoolDownUIControllers;
+    public List<SkillCoolDownUIController> skillCoolDownUIControllers;
     [SerializeField] GameEndUI _endGameScreen;
     private void Awake()
     {
@@ -30,18 +31,21 @@ public class GameMananger : MonoBehaviourPunCallbacks
             return;
         }
     }
-    public void ChooseSkin(int index)
+    /*public void ChooseSkin(int index)
     {
         PUNPlayerController PUNplayer = spawnManager.Spawn().GetComponent<PUNPlayerController>();
 
-        string playerName = GetCurrentPlayerName();
-        int playerSkin = GetCurrentPlayerSkin();
+        *//*string playerName = GetCurrentPlayerName();
+        int playerSkin = GetCurrentPlayerSkin();*//*
 
-        if(playerName == "" || playerSkin == -1)
+        string playerName = PhotonNetwork.LocalPlayer.CustomProperties[PLAYER_NAME].ToString();
+        int playerSkin = (int)PhotonNetwork.LocalPlayer.CustomProperties[PLAYER_SKIN];
+
+        *//*if (playerName == "" || playerSkin == -1)
         {
             Debug.LogError("Can't get player name or Skin!");
             return;
-        }
+        }*//*
 
         PUNplayer.SetData(playerName, playerSkin);
 
@@ -51,7 +55,7 @@ public class GameMananger : MonoBehaviourPunCallbacks
             PUNplayer.player.NickName = playerName;
         }
 
-        /*PUNplayer.SetData(playerNameInputField.text, index);
+        *//*PUNplayer.SetData(playerNameInputField.text, index);
 
         if (PUNplayer.view.IsMine)
         {
@@ -61,15 +65,15 @@ public class GameMananger : MonoBehaviourPunCallbacks
         // player.GetComponent<PhotonView>().RPC("SyncSkin", RpcTarget.All);
 
         chooseSkinButtonContainer?.SetActive(false);
-        playerNameInputField?.transform.parent.gameObject.SetActive(false);*/
+        playerNameInputField?.transform.parent.gameObject.SetActive(false);*//*
 
         foreach (var item in skillCoolDownUIControllers)
         {
             item.gameObject.SetActive(true);
         }
-    }
+    }*/
 
-    private string GetCurrentPlayerName()
+    /*private string GetCurrentPlayerName()
     {
         string name = "";
 
@@ -91,12 +95,12 @@ public class GameMananger : MonoBehaviourPunCallbacks
         }
 
         return skin;
-    }
+    }*/
 
     public void ShowPlayerEnterNotification(string name)
     {
         GameObject notificationText = PhotonNetwork.Instantiate(playerEnterTextPrefab.name, Vector3.zero, Quaternion.identity);
-        notificationText.transform.parent = playerEnterNotificationContainer.transform;
+        notificationText.transform.SetParent(playerEnterNotificationContainer.transform);
         notificationText.GetComponentInChildren<TextMeshProUGUI>().text = $"{name} has entered the game";
     }
     public void SetUpSkillUICooldown()

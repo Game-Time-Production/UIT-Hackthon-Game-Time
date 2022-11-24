@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -19,9 +20,38 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private float timeBetweenUpdates = 1.5f;
     float nextTimeUpdate;
 
+    [SerializeField] PlayerItem playerItemPrefab;
+    List<PlayerItem> playerItemList = new List<PlayerItem>();
+    [SerializeField] Transform playerItemParent;
+
+    [SerializeField] Button playButton;
+
     private void Start()
     {
+        lobbyPanel.SetActive(true);
+        roomPanel.SetActive(false);
         PhotonNetwork.JoinLobby();
+    }
+
+    private void Update()
+    {
+        // Co the dem vao trong UpdateRoomList de giam so lan call
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playButton.gameObject.SetActive(true);
+            if(PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+            {
+                playButton.interactable = false;
+            }
+            else
+            {
+                playButton.interactable = true;
+            }
+        }
+        else
+        {
+            playButton.gameObject.SetActive(false);
+        }
     }
 
     public void OnClickCreate()
@@ -37,6 +67,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         lobbyPanel.SetActive(false);
         roomPanel.SetActive(true);
         roomName.text = "Room name: " + PhotonNetwork.CurrentRoom.Name;
+        UpdatePlayerList();
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -83,5 +114,47 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.JoinLobby();
+    }
+
+    private void UpdatePlayerList()
+    {
+        foreach(PlayerItem item in playerItemList)
+        {
+            Destroy(item.gameObject);
+        }
+        playerItemList.Clear();
+
+        if(PhotonNetwork.CurrentRoom == null)
+        {
+            return;
+        }
+
+        foreach(KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        {
+            PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent);
+            newPlayerItem.SetPlayerInfo(player.Value);
+
+            if(player.Value == PhotonNetwork.LocalPlayer)
+            {
+                newPlayerItem.ApplyLocalChange();
+            }
+
+            playerItemList.Add(newPlayerItem);
+        }
+    }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        UpdatePlayerList();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        UpdatePlayerList();
+    }
+
+    public void OnClickPlayButton()
+    {
+        PhotonNetwork.LoadLevel("Game");
     }
 }

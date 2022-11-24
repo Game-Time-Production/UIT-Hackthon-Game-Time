@@ -20,7 +20,7 @@ public class SkillCoolDownUIController : MonoBehaviour
     {
         cooldownText.enabled = false;
         cooldownBackground.fillAmount = 0;
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
     public void SetUp(float cdDuration)
     {

@@ -1519,9 +1519,9 @@ RectTransform:
   m_Father: {fileID: 1695140769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 334.4733, y: -259.75525}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356632053
@@ -1638,8 +1638,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b50f575bee8a14e4dbe7ee2d2661618c, type: 2}
   - {fileID: 11400000, guid: 799b140583a6e8a4988a27284224d3e1, type: 2}
   spawnManager: {fileID: 516853689}
-  chooseSkinButtonContainer: {fileID: 1695140768}
-  playerNameInputField: {fileID: 1042706227}
   playerEnterNotificationContainer: {fileID: 210327409}
   playerEnterTextPrefab: {fileID: 2262780565552380593, guid: 14639aecc095d8a48830678d676d82d6, type: 3}
   skillCoolDownUIControllers:
@@ -3227,9 +3225,9 @@ RectTransform:
   m_Father: {fileID: 1695140769}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 419.4733, y: -259.75525}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &741797915
@@ -4219,9 +4217,9 @@ RectTransform:
   m_Father: {fileID: 1695140769}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 504.4733, y: -259.75525}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1096238027
@@ -6013,7 +6011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1652642960
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6127,7 +6125,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1695140769
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6459,9 +6457,9 @@ RectTransform:
   m_Father: {fileID: 1695140769}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 589.47327, y: -259.75525}
   m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1856093076
