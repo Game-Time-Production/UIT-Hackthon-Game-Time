@@ -4863,14 +4863,14 @@ RectTransform:
   m_GameObject: {fileID: 1237661196909853231}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 3280433305998029788}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.55}
+  m_AnchoredPosition: {x: 0, y: 0.5}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &1841516042757737892
@@ -5135,7 +5135,9 @@ MonoBehaviour:
   _animator: {fileID: 2971861653939671292}
   _animationState: 0
   speed: 7.5
-  jumpSpeed: 5.75
+  jumpSpeed: 14.5
+  _jumpTime: 0.22
+  _jumpTimeCounter: 0
   forcedMovement: 0
   lockMovement: 0
   _pushCD: 0
@@ -5173,7 +5175,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &7105373480294351210
 BoxCollider2D:

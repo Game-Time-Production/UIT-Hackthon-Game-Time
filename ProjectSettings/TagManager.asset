@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Kill Zone
   - Win Zone
+  - Ground
   layers:
   - Default
   - TransparentFX

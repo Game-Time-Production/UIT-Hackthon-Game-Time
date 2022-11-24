@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using static CustomPropertiesConstant;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
@@ -39,7 +40,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             playButton.gameObject.SetActive(true);
-            if(PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+            if (PhotonNetwork.CurrentRoom.PlayerCount <= 1)
             {
                 playButton.interactable = false;
             }
@@ -47,6 +48,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             {
                 playButton.interactable = true;
             }
+#if UNITY_EDITOR
+            playButton.interactable = true;
+#endif
         }
         else
         {
@@ -56,7 +60,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickCreate()
     {
-        if(roomInputField.text.Length >= 1)
+        if (roomInputField.text.Length >= 1)
         {
             PhotonNetwork.CreateRoom(roomInputField.text, new RoomOptions() { MaxPlayers = 2, BroadcastPropsChangeToAll = true });
         }
@@ -72,7 +76,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        if(Time.time >= nextTimeUpdate)
+        if (Time.time >= nextTimeUpdate)
         {
             UpdateRoomList(roomList);
             nextTimeUpdate = Time.time + timeBetweenUpdates;
@@ -81,13 +85,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     void UpdateRoomList(List<RoomInfo> list)
     {
-        foreach(RoomItem item in roomItemList)
+        foreach (RoomItem item in roomItemList)
         {
             Destroy(item.gameObject);
         }
         roomItemList.Clear();
 
-        foreach(RoomInfo room in list)
+        foreach (RoomInfo room in list)
         {
             RoomItem newRoom = Instantiate(roomItemPrefab, contentObject);
             newRoom.SetRoomName(room.Name);
@@ -118,25 +122,28 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void UpdatePlayerList()
     {
-        foreach(PlayerItem item in playerItemList)
+        foreach (PlayerItem item in playerItemList)
         {
             Destroy(item.gameObject);
         }
         playerItemList.Clear();
 
-        if(PhotonNetwork.CurrentRoom == null)
+        if (PhotonNetwork.CurrentRoom == null)
         {
             return;
         }
 
-        foreach(KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
+        foreach (KeyValuePair<int, Player> player in PhotonNetwork.CurrentRoom.Players)
         {
             PlayerItem newPlayerItem = Instantiate(playerItemPrefab, playerItemParent);
             newPlayerItem.SetPlayerInfo(player.Value);
-
-            if(player.Value == PhotonNetwork.LocalPlayer)
+            if (player.Value == PhotonNetwork.LocalPlayer)
             {
                 newPlayerItem.ApplyLocalChange();
+                // just a temporary fix for when player just enter room and no properties are set
+                ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+                playerProperties[PLAYER_SKIN] = 0;
+                PhotonNetwork.SetPlayerCustomProperties(playerProperties);
             }
 
             playerItemList.Add(newPlayerItem);

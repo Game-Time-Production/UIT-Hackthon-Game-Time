@@ -16,6 +16,9 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     // ------------------------------------ STATS VALUE ------------------------------------ // 
     public float speed = .2f;
     public float jumpSpeed = .2f;
+    [SerializeField] private float _jumpTime;
+    [SerializeField] private float _jumpTimeCounter;
+    private bool _isJumping;
     private float _baseSpeed;
     public float baseSpeed { get { return _baseSpeed; } }
     private float _directionX;
@@ -118,13 +121,32 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     public void ProcessInput()
     {
-        Debug.Log(PhotonNetwork.SendRate);
-        Debug.Log(PhotonNetwork.SerializationRate);
+        // Debug.Log(PhotonNetwork.SendRate);
+        // Debug.Log(PhotonNetwork.SerializationRate);
         // get horizontal direction
         _directionX = Input.GetAxisRaw("Horizontal");
         if (IsGrounded() && Input.GetButtonDown("Jump") && !lockMovement)
         {
-            _rb.velocity = Vector2.up * jumpSpeed * 3;
+            _isJumping = true;
+            // _rb.velocity = Vector2.up * jumpSpeed * 3f;
+            _jumpTimeCounter = _jumpTime;
+            _rb.velocity = Vector2.up * jumpSpeed;
+        }
+        if (Input.GetButton("Jump") && _isJumping)
+        {
+            if (_jumpTimeCounter > 0)
+            {
+                _rb.velocity = Vector2.up * jumpSpeed;
+                _jumpTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                _isJumping = false;
+            }
+        }
+        if (Input.GetButtonUp("Jump") || HeadHitGround())
+        {
+            _isJumping = false;
         }
         if (Input.GetKeyDown(KeyCode.Q) && !_pushCD)
         {
@@ -193,6 +215,26 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
                 throw new System.Exception("Null animation state exception");
         }
     }
+    public bool HeadHitGround()
+    {
+        float extendRayCastDistance = 0.15f;
+        RaycastHit2D raycastHit = Physics2D.Raycast(
+            collider2D.bounds.center,
+            Vector2.up,
+            extendRayCastDistance + collider2D.bounds.size.y / 2,
+            grounds
+        );
+        // debug
+        Color rayColor = Color.red;
+        if (raycastHit.collider == null)
+            rayColor = Color.green;
+        Debug.DrawRay(
+            collider2D.bounds.center,
+            Vector2.up * (extendRayCastDistance + collider2D.bounds.size.y / 2),
+            rayColor
+        );
+        return raycastHit.collider != null;
+    }
     public bool IsGrounded() // BAD
     {
         float extendRayCastDistance = 0.15f;
@@ -228,14 +270,24 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "Kill Zone")
+        // if (other.gameObject.tag == "Kill Zone")
+        // {
+        //     rb.velocity = Vector2.zero;
+        //     transform.position = spawnPos;
+        // }
+        // if (other.gameObject.tag == "Win Zone")
+        // {
+        //     view.RPC("WinGame", RpcTarget.All, view.Owner.NickName);
+        // }
+        switch (other.gameObject.tag)
         {
-            rb.velocity = Vector2.zero;
-            transform.position = spawnPos;
-        }
-        if (other.gameObject.tag == "Win Zone")
-        {
-            view.RPC("WinGame", RpcTarget.All, view.Owner.NickName);
+            case "Kill Zone":
+                rb.velocity = Vector2.zero;
+                transform.position = spawnPos;
+                break;
+            case "Win Zone":
+                view.RPC("WinGame", RpcTarget.All, view.Owner.NickName);
+                break;
         }
     }
     //TODO
