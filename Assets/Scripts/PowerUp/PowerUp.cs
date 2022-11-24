@@ -93,7 +93,7 @@ public class PowerUp : MonoBehaviour
     [PunRPC]
     public void SetPowerUpSprite()
     {
-        spriteRenderer.sprite = powerUpSprites[(int)powerUpType];
+        // spriteRenderer.sprite = powerUpSprites[(int)powerUpType];
     }
     [PunRPC]
     public void RandomizePowerUp()

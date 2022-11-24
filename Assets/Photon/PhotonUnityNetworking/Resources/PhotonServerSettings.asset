@@ -59,6 +59,9 @@ MonoBehaviour:
   - ToggleDashGhostEffect
   - EndGame
   - WinGame
+  - SyncLockStatus
+  - SyncLock
+  - LockMovement
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
