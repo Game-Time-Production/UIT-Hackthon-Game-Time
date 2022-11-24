@@ -31,6 +31,8 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     {
         leftButton.SetActive(true);
         rightButton.SetActive(true);
+        playerProperties[PLAYER_SKIN] = 0;
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
     public void OnClickLeftArrow()
@@ -62,7 +64,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        if(player == targetPlayer)
+        if (player == targetPlayer)
         {
             UpdatePlayerItem(targetPlayer);
         }

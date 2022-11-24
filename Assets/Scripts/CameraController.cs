@@ -8,8 +8,10 @@ public class CameraController : MonoBehaviour
     public Transform target;
     public Vector3 offset;
     [SerializeField] float _smoothPos;
+    [SerializeField] float _smoothDampTime = 0.25f;
     [SerializeField] float _leftBoundaryValue;
     [SerializeField] float _rightBoundaryValue;
+    Vector3 velocity;
     private void Awake()
     {
         if (instance == null)
@@ -32,7 +34,9 @@ public class CameraController : MonoBehaviour
             // calculate position and clamp its value to the hard coded camera boundary
             Vector3 targetPos = target.position + offset;
             targetPos.x = Mathf.Clamp(targetPos.x, _leftBoundaryValue, _rightBoundaryValue);
-            transform.position = Vector3.Lerp(transform.position, targetPos, _smoothPos * Time.fixedDeltaTime);
+            // transform.position = Vector3.Lerp(transform.position, targetPos, _smoothPos * Time.fixedDeltaTime);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, _smoothDampTime);
+
 
         }
     }
