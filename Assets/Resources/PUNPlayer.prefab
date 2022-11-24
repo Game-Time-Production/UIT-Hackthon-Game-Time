@@ -5137,6 +5137,7 @@ MonoBehaviour:
   speed: 5
   jumpSpeed: 5
   forcedMovement: 0
+  lockMovement: 0
   _pushCD: 0
   _shieldCD: 0
   pushCoolDownTime: 1

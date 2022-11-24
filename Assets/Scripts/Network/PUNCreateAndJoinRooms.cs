@@ -8,7 +8,7 @@ using Photon.Realtime;
 
 public class PUNCreateAndJoinRooms : MonoBehaviourPunCallbacks
 {
-    public bool isDevMode;
+    /*public bool isDevMode;
     [SerializeField] TMP_InputField createRoom;
     [SerializeField] TMP_InputField joinRoom;
     [SerializeField] Button starGameButton;
@@ -51,6 +51,6 @@ public class PUNCreateAndJoinRooms : MonoBehaviourPunCallbacks
     public void StartGame()
     {
 
-    }
+    }*/
 
 }
