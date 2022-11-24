@@ -354,4 +354,14 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     {
         GameMananger.instance.EndGame(playerName);
     }
+    [PunRPC]
+    public void LockMovement(bool value, Vector3 position)
+    {
+        lockMovement = value;
+        rb.velocity = Vector2.zero;
+        if (position != null)
+        {
+            transform.position = position;
+        }
+    }
 }
