@@ -34,6 +34,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     public Rigidbody2D rb { get { return _rb; } }
     private Collider2D collider2D;
     public LayerMask grounds;
+    [SerializeField] Transform _originalParent;
+    public Transform originalParent { get { return _originalParent; } }
 
     // ------------------------------------ NETWORK VARIABLES ------------------------------------ // 
     public PhotonView view;
@@ -87,6 +89,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         player = view.Owner;
         _baseSpeed = speed;
         _baseGravityScale = rb.gravityScale;
+        _originalParent = transform.parent;
     }
     private void Start()
     {
@@ -115,6 +118,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     public void ProcessInput()
     {
+        Debug.Log(PhotonNetwork.SendRate);
+        Debug.Log(PhotonNetwork.SerializationRate);
         // get horizontal direction
         _directionX = Input.GetAxisRaw("Horizontal");
         if (IsGrounded() && Input.GetButtonDown("Jump") && !lockMovement)
@@ -353,5 +358,15 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     public void WinGame(string playerName)
     {
         GameMananger.instance.EndGame(playerName);
+    }
+    [PunRPC]
+    public void LockMovement(bool value, Vector3 position)
+    {
+        lockMovement = value;
+        rb.velocity = Vector2.zero;
+        if (position != null)
+        {
+            transform.position = position;
+        }
     }
 }
