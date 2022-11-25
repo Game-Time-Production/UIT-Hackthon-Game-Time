@@ -49,8 +49,9 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     // ------------------------------------ SKILL AND POWERUP, Effects ------------------------------------ // 
     [SerializeField] PlayerPowerUpController playerPowerUpController;
     [SerializeField] GameObject shieldObject;
-    [SerializeField] ParticleSystem speedBoostEffect;
+    [SerializeField] ParticleSystem _speedBoostEffect;
     [SerializeField] GhostEffect _ghostEffect;
+    [SerializeField] ParticleSystem _jumpDust;
     public GhostEffect ghostEffect { get { return _ghostEffect; } }
 
     // ------------------------------------ EVENT ------------------------------------ // 
@@ -131,6 +132,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             // _rb.velocity = Vector2.up * jumpSpeed * 3f;
             _jumpTimeCounter = _jumpTime;
             _rb.velocity = Vector2.up * jumpSpeed;
+            _jumpDust.Play();
         }
         if (Input.GetButton("Jump") && _isJumping)
         {
@@ -270,15 +272,6 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        // if (other.gameObject.tag == "Kill Zone")
-        // {
-        //     rb.velocity = Vector2.zero;
-        //     transform.position = spawnPos;
-        // }
-        // if (other.gameObject.tag == "Win Zone")
-        // {
-        //     view.RPC("WinGame", RpcTarget.All, view.Owner.NickName);
-        // }
         switch (other.gameObject.tag)
         {
             case "Kill Zone":
@@ -394,11 +387,11 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     }
     IEnumerator IncreaseSpeed(float duration, float speedBoostPercent)
     {
-        speedBoostEffect.gameObject.SetActive(true);
+        _speedBoostEffect.gameObject.SetActive(true);
         speed += _baseSpeed * speedBoostPercent;
         yield return new WaitForSeconds(duration);
         speed = _baseSpeed;
-        speedBoostEffect.gameObject.SetActive(false);
+        _speedBoostEffect.gameObject.SetActive(false);
 
     }
     [PunRPC]

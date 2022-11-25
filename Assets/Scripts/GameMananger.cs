@@ -128,5 +128,27 @@ public class GameMananger : MonoBehaviourPunCallbacks
         _endGameScreen.gameObject.SetActive(true);
         _endGameScreen.playerWinText.text = $"PLAYER {playerName} WIN!";
         clientPlayerController.enabled = false;
+        Debug.Log("auto sync scene: " + PhotonNetwork.AutomaticallySyncScene);
+        if (!PhotonNetwork.LocalPlayer.IsMasterClient)
+        {
+            _endGameScreen.restartButton.gameObject.SetActive(false);
+        }
+    }
+    public void ExitRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        PhotonNetwork.LoadLevel("Lobby");
+    }
+    public void RestartGame()
+    {
+        PhotonNetwork.LoadLevel("Reloading Game");
+    }
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
     }
 }

@@ -140,10 +140,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (player.Value == PhotonNetwork.LocalPlayer)
             {
                 newPlayerItem.ApplyLocalChange();
-                // just a temporary fix for when player just enter room and no properties are set
-                ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
-                playerProperties[PLAYER_SKIN] = 0;
-                PhotonNetwork.SetPlayerCustomProperties(playerProperties);
+
             }
 
             playerItemList.Add(newPlayerItem);
