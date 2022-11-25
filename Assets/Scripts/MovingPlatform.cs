@@ -25,17 +25,18 @@ public class MovingPlatform : MonoBehaviour
         //     transform.position,
         //     _waypoints[_currentWaypointIndex].position,
         //      _speed * Time.fixedDeltaTime);
-        if (_view.IsMine)
+        _rb.velocity = _direction * _speed;
+
+
+        if (_playersOnPlatform.Count > 0)
         {
-            _rb.velocity = _direction * _speed;
-            if (_playersOnPlatform.Count > 0)
+            foreach (var player in _playersOnPlatform)
             {
-                foreach (var player in _playersOnPlatform)
-                {
+                if (player.view.IsMine)
                     player.transform.position += (Vector3)_direction * _speed * Time.fixedDeltaTime;
-                }
             }
         }
+
 
         if (Vector2.Distance(transform.position, _waypoints[_currentWaypointIndex].position) <= _checkDistance)
         {
