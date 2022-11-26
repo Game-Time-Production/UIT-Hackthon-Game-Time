@@ -14,7 +14,7 @@ public class SpikeTrap : MonoBehaviour
         // }
         if (other.gameObject.CompareTag("Player"))
         {
-            Vector3 direction = (other.transform.position - transform.position).normalized * knockbackForce;
+            Vector3 direction = (checkpoint.position - transform.position).normalized * knockbackForce;
             other.gameObject.GetComponent<PUNPlayerController>().view.RPC("PushBack", RpcTarget.All, direction);
         }
     }
