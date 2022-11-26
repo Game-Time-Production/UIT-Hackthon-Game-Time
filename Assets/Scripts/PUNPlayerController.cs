@@ -100,6 +100,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         if (!view.IsMine)
         {
             view.RPC("SyncData", RpcTarget.All);
+            GameMananger.instance.otherClientPlayerController = this;
         }
         else
         {
@@ -132,7 +133,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             // _rb.velocity = Vector2.up * jumpSpeed * 3f;
             _jumpTimeCounter = _jumpTime;
             _rb.velocity = Vector2.up * jumpSpeed;
-            _jumpDust.Play();
+            JumpDustEffect();
+            view.RPC(nameof(JumpDustEffect), RpcTarget.Others);
         }
         if (Input.GetButton("Jump") && _isJumping)
         {
@@ -312,7 +314,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncSkin()
     {
-        GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
+        //GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
     }
     public void SetData(string name)//, int skinIndex)
     {
@@ -321,14 +323,14 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         playerProperties[PLAYER_NAME] = name;
         // local change
         nameTagText.text = name;
-        GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
+        //GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
     [PunRPC]
     public void SyncData()
     {
         //GetComponent<SpriteLibrary>().spriteLibraryAsset =
-            //GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
+        //GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
         nameTagText.text = view.Owner.NickName;
     }
     [PunRPC]
@@ -414,5 +416,10 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         {
             transform.position = position;
         }
+    }
+    [PunRPC]
+    public void JumpDustEffect()
+    {
+        _jumpDust.Play();
     }
 }
