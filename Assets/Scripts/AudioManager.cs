@@ -134,7 +134,6 @@ public class AudioManager : MonoBehaviour
         }
         soundTimerArray = new soundTimer[0];
         _spacialSounds = new List<GameObject>();
-
         DontDestroyOnLoad(gameObject);
     }
     void Start()

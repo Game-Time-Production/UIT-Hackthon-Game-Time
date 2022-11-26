@@ -6,10 +6,13 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using static CustomPropertiesConstant;
+using UnityEngine.UI;
 
 public class GameMananger : MonoBehaviourPunCallbacks
 {
     public PUNPlayerController clientPlayerController;
+    public PUNPlayerController otherClientPlayerController;
+
     public List<SpriteLibraryAsset> CharacterSpriteLibraryAssets;
     public static GameMananger instance;
     public SpawnPlayer spawnManager;
@@ -21,6 +24,14 @@ public class GameMananger : MonoBehaviourPunCallbacks
     [Header("Fancy UI Stuffs")]
     public List<SkillCoolDownUIController> skillCoolDownUIControllers;
     [SerializeField] GameEndUI _endGameScreen;
+    public PhotonView view;
+    //------------------------- END GAME CONDITION -------------------------
+    public float endGameTimer;
+    public TextMeshProUGUI endTimerText;
+    public Transform endPoint;
+    public Transform startPoint;
+    public Slider otherPlayerDistanceSlider;
+    public float totalDistance;
     private void Awake()
     {
         if (instance == null)
@@ -30,6 +41,14 @@ public class GameMananger : MonoBehaviourPunCallbacks
             Destroy(gameObject);
             return;
         }
+        view = GetComponent<PhotonView>();
+        if (endPoint && startPoint)
+        {
+            otherPlayerDistanceSlider.value = 0;
+            totalDistance = Vector2.Distance(endPoint.position, startPoint.position);
+
+        }
+
     }
     /*public void ChooseSkin(int index)
     {
@@ -96,7 +115,27 @@ public class GameMananger : MonoBehaviourPunCallbacks
 
         return skin;
     }*/
+    private void Update()
+    {
 
+        if (PhotonNetwork.IsMasterClient && endGameTimer > 0)
+        {
+            endGameTimer -= Time.deltaTime;
+            endTimerText.text = endGameTimer.ToString("0.0");
+            view.RPC(nameof(SyncTimer), RpcTarget.Others, endGameTimer);
+        }
+        if (endGameTimer <= 0)
+        {
+            // view.RPC(nameof(EndGamev2), RpcTarget.All);
+            // Time.timeScale = 0f;
+        }
+        if (otherClientPlayerController)
+        {
+            float ratio = Vector2.Distance(otherClientPlayerController.transform.position, startPoint.position) / totalDistance;
+
+            otherPlayerDistanceSlider.value = ratio;
+        }
+    }
     public void ShowPlayerEnterNotification(string name)
     {
         GameObject notificationText = PhotonNetwork.Instantiate(playerEnterTextPrefab.name, Vector3.zero, Quaternion.identity);
@@ -150,5 +189,16 @@ public class GameMananger : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
+    }
+    [PunRPC]
+    public void EndGamev2()
+    {
+        Debug.Log("game ended");
+    }
+    [PunRPC]
+    public void SyncTimer(float time)
+    {
+        endGameTimer = time;
+        endTimerText.text = endGameTimer.ToString("0.0");
     }
 }

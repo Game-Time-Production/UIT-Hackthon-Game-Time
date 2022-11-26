@@ -100,6 +100,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         if (!view.IsMine)
         {
             view.RPC("SyncData", RpcTarget.All);
+            GameMananger.instance.otherClientPlayerController = this;
         }
         else
         {
@@ -132,7 +133,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
             // _rb.velocity = Vector2.up * jumpSpeed * 3f;
             _jumpTimeCounter = _jumpTime;
             _rb.velocity = Vector2.up * jumpSpeed;
-            _jumpDust.Play();
+            JumpDustEffect();
+            view.RPC(nameof(JumpDustEffect), RpcTarget.Others);
         }
         if (Input.GetButton("Jump") && _isJumping)
         {
@@ -328,7 +330,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     public void SyncData()
     {
         //GetComponent<SpriteLibrary>().spriteLibraryAsset =
-            //GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
+        //GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
         nameTagText.text = view.Owner.NickName;
     }
     [PunRPC]
@@ -414,5 +416,10 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         {
             transform.position = position;
         }
+    }
+    [PunRPC]
+    public void JumpDustEffect()
+    {
+        _jumpDust.Play();
     }
 }

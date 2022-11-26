@@ -28,9 +28,12 @@ public class PushBack : MonoBehaviour
             {
                 Vector3 KnockBackDirection = (transform.position - transform.parent.position).normalized;
                 KnockBack(player, KnockBackDirection);
-
             }
         }
+        // if (other.GetComponent<BreakableBlock>())
+        // {
+        //     other.GetComponent<BreakableBlock>().Break();
+        // }
     }
     public void KnockBack(PUNPlayerController player, Vector3 KnockBackDirection)
     {
