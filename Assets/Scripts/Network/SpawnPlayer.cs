@@ -7,6 +7,9 @@ using static CustomPropertiesConstant;
 public class SpawnPlayer : MonoBehaviour
 {
     [SerializeField] GameObject[] playerPrefab;
+
+    [SerializeField] Transform masterHostPosSpawn;
+    [SerializeField] Transform otherPosSpawn;
     private void Start()
     {
         Spawn();
