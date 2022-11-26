@@ -18,8 +18,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: 202c2f4576390f142881975e69f49edc
   - enabled: 0
-    path: Assets/Scenes/Coop Game.unity
+    path: 
     guid: 628184866e513d842aaed6b52e67239d
+  - enabled: 1
+    path: Assets/Scenes/Coop Game.unity
+    guid: 108dfc14b0a9f7b469c5d7033ae02373
   - enabled: 1
     path: Assets/Scenes/New Folder/Game 1.unity
     guid: 52cc4ba977ead4b4d94b6c9e5dd8ee7b

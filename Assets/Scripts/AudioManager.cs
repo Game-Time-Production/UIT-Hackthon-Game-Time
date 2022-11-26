@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,13 +59,14 @@ public class AudioManager : MonoBehaviour
     public enum Sound
     {
         None = -1,
+        JumpSFX,
 
 
     }
     public enum SoundTrack
     {
         None = -1,
-
+        ST1,
 
 
     }
@@ -141,6 +143,7 @@ public class AudioManager : MonoBehaviour
         // can play main theme or music here
         // Play("Theme");
         // LoadAudioSetting();
+        PlaySoundTrack(SoundTrack.ST1);
     }
 
     // Get spacial sound object
@@ -192,7 +195,7 @@ public class AudioManager : MonoBehaviour
             soundGameObject.name = $"Spacial Sound {s.name}";
             var audioSource = soundGameObject.GetComponent<AudioSource>();
             audioSource.loop = s.loop;
-            audioSource.volume = s.volume * MasterVolume;
+            audioSource.volume = s.volume;
             audioSource.pitch = s.pitch;
             audioSource.spatialBlend = 1f;
             audioSource.rolloffMode = AudioRolloffMode.Linear;
@@ -220,7 +223,7 @@ public class AudioManager : MonoBehaviour
             _oneShotGameObject.SetActive(true);
             _oneShotGameObject.name = "Oneshot sound " + s.name;
             _oneShotAudioSource.loop = s.loop;
-            _oneShotAudioSource.volume = s.volume * MasterVolume;
+            _oneShotAudioSource.volume = s.volume;
             _oneShotAudioSource.pitch = s.pitch;
             _oneShotAudioSource.clip = GetAudioClip(sound);
             _oneShotAudioSource.Play();
@@ -245,7 +248,7 @@ public class AudioManager : MonoBehaviour
         SoundAudioClip<SoundTrack> s = System.Array.Find(soundTrackArray, SoundTrack => SoundTrack.sound == soundTrack);
         _soundTrackObject.audioSource.name = s.name;
         _soundTrackObject.audioSource.loop = s.loop;
-        _soundTrackObject.audioSource.volume = SountrackVolume * MasterVolume;
+        _soundTrackObject.audioSource.volume = SountrackVolume;
         _soundTrackObject.audioSource.pitch = s.pitch;
         // soundTrackAudioSource.PlayOneShot(GetAudioClip(soundTrack));
         _soundTrackObject.audioSource.clip = GetAudioClip(soundTrack);
@@ -339,14 +342,14 @@ public class AudioManager : MonoBehaviour
     {
         if (_soundTrackObject != null)
         {
-            _soundTrackObject.audioSource.volume = SountrackVolume * MasterVolume; // redundant 
+            _soundTrackObject.audioSource.volume = SountrackVolume ; // redundant 
         }
     }
     public virtual void OnSoundTrackVolumeChange()
     {
         if (_soundTrackObject != null)
         {
-            _soundTrackObject.audioSource.volume = SountrackVolume * MasterVolume; // redundant
+            _soundTrackObject.audioSource.volume = SountrackVolume; // redundant
         }
     }
     // public void LoadAudioSetting()
