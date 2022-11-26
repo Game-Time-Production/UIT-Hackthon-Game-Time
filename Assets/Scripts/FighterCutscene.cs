@@ -9,11 +9,14 @@ public class FighterCutscene : MonoBehaviour
     {
         Watch,
         Wait,
-        Done
+        Done,
+        Waiting
     }
 
-    [SerializeField] bool isDone;
-    [SerializeField] int totalPlayerDone;
+    [SerializeField] GameObject pannelWaiting;
+    bool isDone;
+    int totalPlayerDone;
+    bool isSkiping;
     CutSceneState state;
     PhotonView view;
 
@@ -22,6 +25,7 @@ public class FighterCutscene : MonoBehaviour
     {
         view = GetComponent<PhotonView>();
 
+        isSkiping = false;
         isDone = false;
         totalPlayerDone = 0;
 
@@ -30,12 +34,15 @@ public class FighterCutscene : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Backspace))
+        if (Input.GetKeyDown(KeyCode.Space) && isSkiping == false)
         {
-            isDone=true;
+            Debug.Log("Skip");
+            //isDone=true;
+            isSkiping=true;
+            Time.timeScale=5f;
         }
 
-        if(state == CutSceneState.Watch && isDone == true)
+        if (state == CutSceneState.Watch && isDone == true)
         {
             if (PhotonNetwork.IsMasterClient)
             {
@@ -51,7 +58,13 @@ public class FighterCutscene : MonoBehaviour
             state = CutSceneState.Wait;
         }
 
-        if (PhotonNetwork.IsMasterClient && state == CutSceneState.Wait && totalPlayerDone >= 2)
+        if(state == CutSceneState.Wait)
+        {
+            pannelWaiting.SetActive(true);
+            state = CutSceneState.Waiting;
+        }
+
+        if (PhotonNetwork.IsMasterClient && state == CutSceneState.Waiting && totalPlayerDone >= 2)
         {
             PhotonNetwork.LoadLevel("Game 1");
             state = CutSceneState.Done;
@@ -66,6 +79,7 @@ public class FighterCutscene : MonoBehaviour
 
     public void DoneWatchingCutScene()
     {
+        Time.timeScale = 1f;
         isDone = true;
     }
 }
