@@ -8,6 +8,6 @@ public class PUNReloadGame : MonoBehaviourPunCallbacks
     // seriously a dumb ass work around method to reload a scene in Photon PUN 
     void Start()
     {
-        PhotonNetwork.LoadLevel("Game");
+        PhotonNetwork.LoadLevel("Game 1");
     }
 }

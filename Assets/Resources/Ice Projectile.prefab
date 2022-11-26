@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 15
-  m_Sprite: {fileID: 3550801361450157579, guid: 1618106238c3053448e970587ee677d4, type: 3}
+  m_Sprite: {fileID: -647041791, guid: d6e9d13b9208e0d41b196956af3fa161, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,7 +114,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6273014983152379042}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 357f4295f136fc6498e36b47730fab58, type: 2}
   m_CullingMode: 0
@@ -200,6 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dddbb01f80d7204896960ca2f253439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explodeEffect: {fileID: 1465360811409814876, guid: 6f5c066981a76f64484b59ae62b7f767, type: 3}
+  explodeEffect: {fileID: 5713272085382908822, guid: 873f54ed3d7cc114499f01b79a49c8d1, type: 3}
   slowPercent: 0.5
   slowDuration: 2

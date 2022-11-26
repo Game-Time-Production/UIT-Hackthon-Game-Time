@@ -36,10 +36,10 @@ public class CoopTransitionMP : MonoBehaviour
                         player.transform.position += (Vector3)_direction * _speed * Time.fixedDeltaTime;
                 }
             }
-            if (Vector2.Distance(transform.position, _waypoints[_currentWaypointIndex].position) <= _checkDistance)
-            {
-                GetNextWaypoint();
-            }
+        }
+        if (Vector2.Distance(transform.position, _waypoints[_currentWaypointIndex].position) <= _checkDistance)
+        {
+            GetNextWaypoint();
         }
     }
     private void OnCollisionEnter2D(Collision2D other)
@@ -93,6 +93,8 @@ public class CoopTransitionMP : MonoBehaviour
         // }
         // _direction = (_waypoints[_currentWaypointIndex].position - transform.position).normalized;
         _rb.velocity = Vector2.zero;
+        _rb.bodyType = RigidbodyType2D.Kinematic;
+        lockObject.SetActive(false);
     }
     [PunRPC]
     public void PhaseTranstion(bool value)

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d6e9d13b9208e0d41b196956af3fa161
+guid: 51cf1db7a4b63234ea01682c40f3785b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -68,7 +68,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -116,22 +116,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Banana Peel_0
+      name: Trash 2_0
       rect:
         serializedVersion: 2
-        x: 43
-        y: 7
-        width: 21
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 1
+        y: 2
+        width: 61
+        height: 21
+      alignment: 9
+      pivot: {x: 0.5, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa9f35bfeb339174392d2bb427a6e9c6
-      internalID: -647041791
+      spriteID: d4f08271434846a429e5da1dceb04a36
+      internalID: 1675025091
       vertices: []
       indices: 
       edges: []
@@ -147,7 +147,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Banana Peel_0: -647041791
+      Trash 2_0: 1675025091
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

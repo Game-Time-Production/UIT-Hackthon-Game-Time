@@ -420,6 +420,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void JumpDustEffect()
     {
+        AudioManager.instance.PlaySound(AudioManager.Sound.JumpSFX, transform.position);
         _jumpDust.Play();
     }
 }
