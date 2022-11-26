@@ -280,6 +280,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
                 break;
             case "Win Zone":
                 view.RPC("WinGame", RpcTarget.All, view.Owner.NickName);
+                // view.
                 break;
         }
     }
