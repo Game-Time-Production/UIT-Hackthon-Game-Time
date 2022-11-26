@@ -32,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4888634528655336914}
   - {fileID: 3500137498696539674}
@@ -49,6 +50,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -127,7 +129,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.2}
+    oldSize: {x: 0.9375, y: 1.125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -138,7 +140,7 @@ BoxCollider2D:
   m_EdgeRadius: 0
 --- !u!95 &3464511357864694511
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -151,6 +153,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -167,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Library: []
   m_SpriteLibraryAsset: {fileID: 11400000, guid: 5ea4802ecfa7bfb4c89ba42dd6b80516, type: 2}
 --- !u!114 &5706910931367153341
 MonoBehaviour:
@@ -182,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CategoryHash: -0.45202813
   m_labelHash: 4.41216e-21
+  m_SpriteKey: -3.620378e-36
 --- !u!1 &6186852761053585186
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,6 +214,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.115, y: -0.08, z: 0}
   m_LocalScale: {x: 0.2889, y: 0.2889, z: 0.2889}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3795468383724925391}
   m_RootOrder: 1
@@ -224,6 +230,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -292,6 +299,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.405, y: -0.324, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3795468383724925391}
   m_RootOrder: 0
@@ -324,5 +332,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63981880dbc8c4348bd3ac855c7a284d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentPlayer: {fileID: 0}
   _knockBackForce: 20
+  pushOnCollision: 0
