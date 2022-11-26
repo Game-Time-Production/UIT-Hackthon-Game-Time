@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.U2D.Animation;
+
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -10,7 +10,7 @@ using static CustomPropertiesConstant;
 public class GameMananger : MonoBehaviourPunCallbacks
 {
     public PUNPlayerController clientPlayerController;
-    public List<SpriteLibraryAsset> CharacterSpriteLibraryAssets;
+    public List<UnityEngine.U2D.Animation.SpriteLibraryAsset> CharacterSpriteLibraryAssets;
     public static GameMananger instance;
     public SpawnPlayer spawnManager;
     //[SerializeField] GameObject chooseSkinButtonContainer;

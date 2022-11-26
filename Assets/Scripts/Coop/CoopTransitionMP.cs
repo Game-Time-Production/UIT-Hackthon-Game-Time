@@ -14,8 +14,10 @@ public class CoopTransitionMP : MonoBehaviour
     [SerializeField] Vector2 _direction;
     public bool transitioning;
     public GameObject lockObject;
+    int _playerCount = 0;
     private void Awake()
     {
+        transitioning = false;
         _view = GetComponent<PhotonView>();
         _playersOnPlatform = new List<PUNPlayerController>();
         _direction = (_waypoints[_currentWaypointIndex].position - transform.position).normalized;
@@ -44,9 +46,18 @@ public class CoopTransitionMP : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                if (!transitioning)
+                {
+                    _playerCount++;
+                }
+            }
+            Debug.Log("Player count: " + _playerCount);
+
             // other.transform.parent = transform;
-            _playersOnPlatform.Add(other.gameObject.GetComponent<PUNPlayerController>());
-            if (_playersOnPlatform.Count >= 2)
+            //_playersOnPlatform.Add(other.gameObject.GetComponent<PUNPlayerController>());
+            if (_playerCount >= 1)
             {
                 lockObject.SetActive(true);
                 _view.RPC(nameof(PhaseTranstion), RpcTarget.All, true);
@@ -57,11 +68,15 @@ public class CoopTransitionMP : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            if (!transitioning)
+            {
+                _playerCount--;
+            }
             // other.transform.parent = other.gameObject.GetComponent<PUNPlayerController>().originalParent;
-            PUNPlayerController playerController = other.gameObject.GetComponent<PUNPlayerController>();
-            playerController.rb.velocity += _rb.velocity; // just for fun
-            _playersOnPlatform.Remove(playerController); // maybe this won't cause bug just maybe
-            if (_playersOnPlatform.Count < 2)
+            //PUNPlayerController playerController = other.gameObject.GetComponent<PUNPlayerController>();
+            //playerController.rb.velocity += _rb.velocity; // just for fun
+            //_playersOnPlatform.Remove(playerController); // maybe this won't cause bug just maybe
+            if (_playerCount < 1)
             {
                 lockObject.SetActive(false);
                 _view.RPC(nameof(PhaseTranstion), RpcTarget.All, false);
@@ -83,6 +98,5 @@ public class CoopTransitionMP : MonoBehaviour
     public void PhaseTranstion(bool value)
     {
         transitioning = value;
-
     }
 }

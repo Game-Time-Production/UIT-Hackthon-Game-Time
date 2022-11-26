@@ -42,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -268,6 +269,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Burst of ice_4: -7323701939328404671
+      Burst of ice_3: -4394498524694282613
+      Burst of ice_1: -1463017250220145708
+      Burst of ice_5: -8952496414129348575
+      Burst of ice_0: -2381176166912429177
+      Burst of ice_2: -7885709787981114310
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

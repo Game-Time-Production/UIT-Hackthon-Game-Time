@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.U2D.Animation; // WHY 
+ // WHY 
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -10,7 +10,7 @@ using TMPro;
 public class PUNPlayerController : MonoBehaviourPunCallbacks
 {
     // ------------------------------------ ANIMATION VARIABLES ------------------------------------ // 
-    public SpriteLibrary spriteLibrary;
+    public UnityEngine.U2D.Animation.SpriteLibrary spriteLibrary;
     [SerializeField] private Animator _animator;
     [SerializeField] AnimationState _animationState;
     // ------------------------------------ STATS VALUE ------------------------------------ // 
@@ -82,7 +82,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         // local variable
         spawnPos = transform.position;
         collider2D = GetComponent<Collider2D>();
-        spriteLibrary = GetComponent<SpriteLibrary>();
+        spriteLibrary = GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>();
         if (_animator == null)
             _animator = GetComponent<Animator>();
         animationState = AnimationState.Idling;
@@ -312,7 +312,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncSkin()
     {
-        GetComponent<SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
+        GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
     }
     public void SetData(string name)//, int skinIndex)
     {
@@ -321,7 +321,7 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
         playerProperties[PLAYER_NAME] = name;
         // local change
         nameTagText.text = name;
-        GetComponent<SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
+        GetComponent<UnityEngine.U2D.Animation.SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
     [PunRPC]

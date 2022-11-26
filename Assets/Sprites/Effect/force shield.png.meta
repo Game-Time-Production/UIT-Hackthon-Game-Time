@@ -249,6 +249,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1924,6 +1925,82 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      force shield_15: -2904329426744454375
+      force shield_21: 4679461670089196078
+      force shield_35: 1166427985265309608
+      force shield_31: 4565909202634535464
+      force shield_70: -3628607359778124794
+      force shield_9: 1227847458332399106
+      force shield_40: -7795662612164962017
+      force shield_43: -8938535506412767016
+      force shield_57: -8377505897097821651
+      force shield_59: -8963263904324792848
+      force shield_26: -4697391806322997034
+      force shield_47: -7155565848144131868
+      force shield_24: -6198126041484574161
+      force shield_1: 4751639429589482192
+      force shield_27: -4454243445546873900
+      force shield_56: 3307526109723962194
+      force shield_8: -6637971320315797175
+      force shield_17: -8193104423623419906
+      force shield_0: 715484707370979842
+      force shield_10: 3113397603314082677
+      force shield_49: 7398771862314263618
+      force shield_50: -4904675880364060246
+      force shield_6: -5561243941472051820
+      force shield_58: 5027812988405240254
+      force shield_19: 8614414250282030026
+      force shield_45: 5569049722483182883
+      force shield_20: -6843067505537428574
+      force shield_55: -4178694015120412174
+      force shield_2: 8496815445871186496
+      force shield_23: 5481651797116775615
+      force shield_62: -5582456660959481298
+      force shield_65: -6465289424319312077
+      force shield_67: 2965355716233431542
+      force shield_72: 5726620309988765572
+      force shield_68: 2442084199710287909
+      force shield_38: -5012739797817376637
+      force shield_14: -6731118394610914808
+      force shield_37: -1884671007308401094
+      force shield_73: 2954463241421708086
+      force shield_52: 1453978850838399107
+      force shield_54: 3970264644656655938
+      force shield_5: 2956152349217611382
+      force shield_51: 6306735869886316912
+      force shield_66: -331088349173866750
+      force shield_4: 1838203409981604007
+      force shield_12: 7879924748242971570
+      force shield_30: -5018588970038061386
+      force shield_74: 7967103170598513659
+      force shield_32: 3361317339525898163
+      force shield_60: -6156173868232736088
+      force shield_69: -6184925530854175647
+      force shield_41: 1254326545151346540
+      force shield_28: 3342375213398452525
+      force shield_7: 5250998777324984604
+      force shield_44: 6836388349103373366
+      force shield_29: -8336002055002530225
+      force shield_48: -818405941428140667
+      force shield_34: -7830499493278678358
+      force shield_33: -8318826510961515855
+      force shield_36: 8090328861595465025
+      force shield_11: 5823623882516825982
+      force shield_42: 6104530472148471093
+      force shield_25: 5373169282495451194
+      force shield_53: -1072698877818595815
+      force shield_64: -9209945036598538343
+      force shield_3: -4709062579909991060
+      force shield_18: 7841777822569632532
+      force shield_63: 1543536967416923515
+      force shield_61: -1806171845175788448
+      force shield_16: 3743607641377292797
+      force shield_46: 4441726307457776916
+      force shield_13: -8000630868787997472
+      force shield_39: 9100267070707817042
+      force shield_71: 544565080719413820
+      force shield_22: 6677028233290816150
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

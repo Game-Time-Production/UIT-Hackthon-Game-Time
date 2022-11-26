@@ -66,6 +66,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -460,6 +461,21 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Explosion SpriteSheet_6: 8296492952570185573
+      Explosion SpriteSheet_7: -1189568387140394160
+      Explosion SpriteSheet_9: -5502693285337484479
+      Temporary Bomb Icon: 2124883812659417606
+      Explosion SpriteSheet_11: -4780470499570323640
+      Explosion SpriteSheet_0: -8227423255571478107
+      Explosion SpriteSheet_2: 3274773884147064335
+      Explosion SpriteSheet_4: 6910662753779529337
+      Explosion SpriteSheet_1: -6740212079913250166
+      Explosion SpriteSheet_5: 9180795563542151505
+      Explosion SpriteSheet_10: -8348187341106573518
+      Explosion SpriteSheet_8: -2492908855925203694
+      Explosion SpriteSheet_3: 1117449302587671922
+      Explosion SpriteSheet_12: 5663960301317498238
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
