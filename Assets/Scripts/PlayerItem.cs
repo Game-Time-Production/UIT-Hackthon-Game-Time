@@ -31,7 +31,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
     {
         leftButton.SetActive(true);
         rightButton.SetActive(true);
-        playerProperties[PLAYER_SKIN] = 0;
+        //playerProperties[PLAYER_SKIN] = 0;
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 

@@ -313,10 +313,10 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     {
         GetComponent<SpriteLibrary>().spriteLibraryAsset = GameMananger.instance.CharacterSpriteLibraryAssets[skinIndex];
     }
-    public void SetData(string name, int skinIndex)
+    public void SetData(string name)//, int skinIndex)
     {
         // sync change maybe ...
-        playerProperties[SKIN_INDEX] = skinIndex;
+        //playerProperties[SKIN_INDEX] = skinIndex;
         playerProperties[PLAYER_NAME] = name;
         // local change
         nameTagText.text = name;
@@ -326,8 +326,8 @@ public class PUNPlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SyncData()
     {
-        GetComponent<SpriteLibrary>().spriteLibraryAsset =
-            GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
+        //GetComponent<SpriteLibrary>().spriteLibraryAsset =
+            //GameMananger.instance.CharacterSpriteLibraryAssets[(int)view.Owner.CustomProperties[SKIN_INDEX]];
         nameTagText.text = view.Owner.NickName;
     }
     [PunRPC]

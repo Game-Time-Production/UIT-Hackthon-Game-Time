@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1193820911090328509, guid: 47bcb9c777070e34f82fe3c4814d9e4a, type: 3}
+  m_Sprite: {fileID: -2182923366814683453, guid: ea08ffc720572bb4ab20cf9dfb75734a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -438,10 +438,9 @@ MonoBehaviour:
   rightButton: {fileID: 5870015653957158106}
   playerSkin: {fileID: 5870015652019819921}
   skins:
-  - {fileID: -1193820911090328509, guid: 47bcb9c777070e34f82fe3c4814d9e4a, type: 3}
-  - {fileID: 6257046027232108077, guid: 3e1d3f7a97f2d30469ba8ca886136fec, type: 3}
-  - {fileID: 6691028219476326333, guid: 52333ead2ab681f49b95acd12525968e, type: 3}
-  - {fileID: 2072640275240368233, guid: 8b4bd46ccb32cc843b43d8ca7c8925e8, type: 3}
+  - {fileID: -2182923366814683453, guid: ea08ffc720572bb4ab20cf9dfb75734a, type: 3}
+  - {fileID: -1980192109424458710, guid: ea08ffc720572bb4ab20cf9dfb75734a, type: 3}
+  - {fileID: 6228831584386483824, guid: ea08ffc720572bb4ab20cf9dfb75734a, type: 3}
 --- !u!1 &5870015653957158106
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     List<RoomItem> roomItemList = new List<RoomItem>();
     [SerializeField] Transform contentObject;
 
-    private float timeBetweenUpdates = 1.5f;
+    private float timeBetweenUpdates = 0.3f;
     float nextTimeUpdate;
 
     [SerializeField] PlayerItem playerItemPrefab;
@@ -140,7 +140,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (player.Value == PhotonNetwork.LocalPlayer)
             {
                 newPlayerItem.ApplyLocalChange();
-
             }
 
             playerItemList.Add(newPlayerItem);
